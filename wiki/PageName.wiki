@@ -8,4 +8,4 @@ jsEasyCharts.line(
 );
 }}}
 
-[http://chart.apis.google.com/chart?chs=100x100&chd=t:80,15,45,11,70,55&cht=lc&&chco=&]
+[http://chart.apis.google.com/chart?chs=100x100&chd=t:80,15,45,11,70,55&cht=lc&&chco=&png]
