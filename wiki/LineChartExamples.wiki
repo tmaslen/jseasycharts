@@ -14,8 +14,6 @@ jsEasyCharts.line(
 
 [http://chart.apis.google.com/chart?chs=100x100&chd=t:80,15,45,11,70,55&cht=lc&&chco=&foo=.png]
 
-#summary Line Chart Examples
-
 == Setting data with JSON, sizing and colouring ==
 
 As well as defining the data for the chart as an array, you can also pass in a JSON object. If you do this, the labels in the JSON object will be used in the chart. Note that if labels are supplied for the chart, then axis labels will be added also.
@@ -41,3 +39,21 @@ jsEasyCharts.line(
 }}}
 
 [http://chart.apis.google.com/chart?chs=300x150&chd=t:70,54,51,60,33,30&cht=lc&chxl=0:|January|Febuary|March|April|May|June&chco=99cc00&chxt=x,y&foo=.png]
+
+==Defining labels and setting data with a HTML table==
+
+You can define the data for the chart using a (2 row/column only) table. The options object also allows you to override the labels (from the data source) and set axis labels for the chart.
+
+{{{
+jsEasyCharts.line(
+        'line3',
+        'dataLine3',
+        {
+                size: '200x120',
+                labels: ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th'],
+                axisLabels: ['0%', '25%', '50%', '75%', '100%']
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=200x120&chd=t:36,42,53,40,39,30,36,45,50&cht=lc&chxl=0:|1st|2nd|3rd|4th|5th|6th|7th|8th|9th|1:|0%|25%|50%|75%|100%&chco=&chxt=x,y&foo=.png]
