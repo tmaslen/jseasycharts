@@ -13,3 +13,31 @@ jsEasyCharts.line(
 }}}
 
 [http://chart.apis.google.com/chart?chs=100x100&chd=t:80,15,45,11,70,55&cht=lc&&chco=&foo=.png]
+
+#summary Line Chart Examples
+
+== Setting data with JSON, sizing and colouring ==
+
+As well as defining the data for the chart as an array, you can also pass in a JSON object. If you do this, the labels in the JSON object will be used in the chart. Note that if labels are supplied for the chart, then axis labels will be added also.
+
+A third optional param in the method call is an options object. Here you can set the size and colouring of the chart.
+
+{{{
+jsEasyCharts.line(
+        document.getElementById('line2'),
+        {
+                January: 70,
+                Febuary: 54,
+                March: 51,
+                April: 60,
+                May: 33,
+                June: 30
+        },
+        {
+                colour: 'ff0000',
+                size: '110x110'
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=300x150&chd=t:70,54,51,60,33,30&cht=lc&chxl=0:|January|Febuary|March|April|May|June&chco=99cc00&chxt=x,y&foo=.png]
