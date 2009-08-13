@@ -1,7 +1,10 @@
 #summary Line Chart Examples
 #labels Featured,linechart,example
 
-= Basic line chart =
+== Basic line chart ==
+
+You can use the API with very minimal settings. You can create a chart with just a reference to a parent element and an array of values, like so:
+
 {{{
 jsEasyCharts.line(
         'line1',
