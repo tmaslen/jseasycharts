@@ -44,6 +44,16 @@ jsEasyCharts.line(
 
 You can define the data for the chart using a (2 row/column only) table. The options object also allows you to override the labels (from the data source) and set axis labels for the chart.
 
+|| 2009-02-01 || 36 ||
+|| 2009-02-02 || 42 ||
+|| 2009-02-03 || 53 ||
+|| 2009-02-04 || 40 ||
+|| 2009-02-05 || 39 ||
+|| 2009-02-06 || 30 ||
+|| 2009-02-07 || 36 ||
+|| 2009-02-08 || 45 ||
+|| 2009-02-09 || 50 ||
+
 {{{
 jsEasyCharts.line(
         'line3',
