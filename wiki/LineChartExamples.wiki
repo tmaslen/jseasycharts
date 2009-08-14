@@ -1,5 +1,5 @@
 #summary Line Chart Examples
-#labels Featured,linechart,example
+#labels Featured,LineChart,Example
 
 == Basic line chart ==
 
