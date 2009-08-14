@@ -12,7 +12,7 @@ jsEasyCharts.line(attachTo, dataSource, opts);
 	<dd>Type: Array | JSON object | table DOM element<br/>
 	The data that you want to populate the chart with.  This can be an array/multi-dimensional array, a JSON object or a reference to a table element.</dd>
 	<dt><strong>opts</strong></dt>
-	<dd>Type: JSON object</strong><br/>
+	<dd>Type: JSON object<br/>
 	Optional configuration setting.
 	<dl>
 		<dt><strong>axisLabels</strong></dt>
