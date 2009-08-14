@@ -1,4 +1,5 @@
-#Bar Chart Examples
+#summary Bar Chart Examples
+#labels Featured,BarChart,Example
 
 == Basic bar chart ==
 
