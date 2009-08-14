@@ -55,3 +55,27 @@ jsEasyCharts.bar(
 }}}
 
 [http://chart.apis.google.com/chart?chs=200x120&chd=t:33,16,20|33,16,20&cht=bhs&chxl=0:|Lib%20Dem|Lab|Con|1:|0%|25%|50%|75%|100%&chco=&chxt=y,x&chds=,140&foo=.png]
+
+== Vertical bar chart ==
+
+The third param in the method call is an options object. Here you can set the type of chart and also the width and spacing of the bars. Setting the width and spacing of the bars is useful if the labels are wider than the bars.
+
+{{{
+jsEasyCharts.bar(
+        'bar2',
+        {
+                Apricots: 10,
+                Walnuts: 20,
+                Hazelnut: 30,
+                Almond: 40
+        },
+        {
+                type: 'vertical',
+                size: '450x200'
+                barWidth: 20,
+                barSpacing: 30
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=250x150&chd=t:30,10,40,20&cht=bvs&chxl=0:|Hazelnut|Apricots|Almond|Walnuts&chco=&chxt=x,y&chds=,140&chbh=20,30&foo=.png]
