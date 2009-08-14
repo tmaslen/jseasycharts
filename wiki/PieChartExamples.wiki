@@ -56,3 +56,44 @@ jsEasyCharts.pie(
 }}}
 
 [http://chart.apis.google.com/chart?chs=650x300&chd=t:33,16,20&cht=p3&chl=Conservative|Labour|Lib%20Dem&chco=0000ff,ff0000,ffff00&foo=.png]
+
+== Overriding labels on the chart ==
+
+The options object will also let you override the labels too (if you so desire), as well as set a single colour which Google Chart will then use to make up all the colours in the chart.
+
+|| Internet Explorer 7 || Internet Explorer 6 || Internet Explorer 8 || Firefox	Chrome || Safari || Others ||
+|| 21.3 || 14.5 || 5.2 || 47.7 || 40 || 3.0 || 2.2 ||
+
+{{{
+jsEasyCharts.pie(
+        'chart4',
+        'data4',
+        {
+                labels: ['IE7', 'IE6', 'IE8', 'FF', 'CH', 'SF', 'OTHERS'],
+                size: '600x300',
+                colour: '99cc00'
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=600x300&chd=t:21,14,5,47,40,3,2&cht=p&chl=IE7|IE6|IE8|FF|CH|SF|OTHERS&chco=99cc00&foo=.png]
+
+== Multiple data tracks with a HTML table in a pie chart ==
+
+|| Internet Explorer 7 || Internet Explorer 6 || Internet Explorer 8 || Firefox || Chrome ||
+|| 25 || 15 || 20 || 30 || 10 ||
+|| 15 || 20 || 30 || 10 || 25 ||
+
+{{{
+jsEasyCharts.pie(
+        'chart5',
+        'data5',
+        {
+                size: '600x300',
+                colour: '0099cc',
+                showLabels: false
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=600x300&chd=t:25,15,20,30,10|15,20,30,10,25&cht=pc&&chco=0099cc&undefined&chdl=UK|USA&foo=.png]
