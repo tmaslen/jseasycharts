@@ -13,3 +13,46 @@ jsEasyCharts.pie(
 }}}
 
 [http://chart.apis.google.com/chart?chs=100x100&chd=t:10,10,10&cht=p&&chco=&foo=.png]
+
+== Setting data with JSON ==
+
+As well as defining the data for the chart as an array, you can also pass in a JSON object. If you do this, the labels in the JSON object will be used in the chart. A third optional param in the method call is an options object. Here you can set the size of the chart.
+
+{{{
+jsEasyCharts.pie(
+        'chart2',
+        {
+                Apricots: 10,
+                Walnuts: 20,
+                Hazelnut: 30,
+                Almond: 40
+        },
+        {
+                size: '500x250'
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=500x250&chd=t:10,20,30,40&cht=p&chl=Apricots|Walnuts|Hazelnut|Almond&chco=&foo=.png]
+
+== Setting data with a HTML table, changing the type of bar chart, and changing the colour ==
+
+Not only can you use an array and a JSON object to define the data for the chart, you can also pass in a (2 row/column only) table. The options object also lets you set the type of pie chart, and pass in a list of colours to use for the values.
+
+|| Conservative || 33 ||
+|| Labour ||16 ||
+|| Lib Dem ||20 ||
+
+{{{
+jsEasyCharts.pie(
+        'chart3',
+        'data3',
+        {
+                type: '3d',
+                size: '650x300',
+                colour: '0000ff,ff0000,ffff00'
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=650x300&chd=t:33,16,20&cht=p3&chl=Conservative|Labour|Lib%20Dem&chco=0000ff,ff0000,ffff00&foo=.png]
