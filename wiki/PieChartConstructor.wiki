@@ -1,4 +1,4 @@
-#summary Pie Chart Constructor
+#summary Constructor API for the Pie Chart
 #labels PieChart,Constructor
 
 {{{
