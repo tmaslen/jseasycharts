@@ -67,3 +67,40 @@ jsEasyCharts.line(
 }}}
 
 [http://chart.apis.google.com/chart?chs=200x120&chd=t:36,42,53,40,39,30,36,45,50&cht=lc&chxl=0:|1st|2nd|3rd|4th|5th|6th|7th|8th|9th|1:|0%|25%|50%|75%|100%&chco=&chxt=x,y&foo=.png]
+
+== Data scaling a line chart ==
+
+By default the values that you can enter range from 0 - 100. Google Charts will ignore any value you enter which is less than 0, and cap any values higher than 100 at 100. You can override this behaviour with the use of the dataScaling parameter in the options object.
+
+{{{
+jsEasyCharts.line(
+        'line4',
+        {
+                week01: 20,
+                week02: 17,
+                week03: 13,
+                week04: 8,
+                week05: 4,
+                week06: -1,
+                week07: 1,
+                week08: 0,
+                week09: -1,
+                week10: -3,
+                week11: -6,
+                week12: -5,
+                week13: -2,
+                week14: 2
+        },
+        {
+                size: '200x120',
+                dataScaling: {
+                        top: 140, 
+                        bottom: -80
+                },
+                axisLabels: ['-10', '-08', '-06', '-04', '-02', '0', '2', '4', '6', 
+                        '8', '10', '12', '14', '16', '18', '20']
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=600x300&chd=t:20,17,13,8,4,-1,1,0,-1,-3,-6,-5,-2,2&cht=lc&chxl=0:|week01|week02|week03|week04|week05|week06|week07|week08|week09|week10|week11|week12|week13|week14|1:|-10|-8|-6|-4|-2|0|2|4|6|8|10|12|14|16|18|20&chco=&chxt=x,y&chds=-15,25&foo=.png]
