@@ -1,0 +1,15 @@
+#summary Pie Chart Examples
+#labels Featured,PieChart,Exammple
+
+== Basic pie chart ==
+
+You can use the API with very minimal settings. You can create a chart with just a reference to a parent element and an array of values, like so:
+
+{{{
+jsEasyCharts.pie(
+        'chart1',
+        [10,10,10]
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=100x100&chd=t:10,10,10&cht=p&&chco=&foo=.png]
