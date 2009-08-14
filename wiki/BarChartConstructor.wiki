@@ -1,0 +1,65 @@
+#summary Bar Chart Constructor
+#labels Constructor,BarChart
+
+{{{
+jsEasyCharts.bar(attachTo, dataSource, opts);
+}}}
+
+<dl>
+	<dt><strong>attachTo</strong></dt>
+	<dd>Type: DOM element | string<br/>
+	Reference of an element on the page where you want the chart to be put.  This can be either a string dictating the id of the element or a reference to the element itself.</dd>
+	<dt><strong>dataSource</strong></dt>
+	<dd>Type: Array | JSON object | table DOM element<br/>
+	The data that you want to populate the chart with.  This can be an array/multi-dimensional array, a JSON object or a reference to a table element.</dd>
+	<dt><strong>opts</strong></dt>
+	<dd>Type: JSON object<br/>
+	Optional configuration setting.
+	<dl>
+		<dt><strong>axisLabels</strong></dt>
+		<dd>Type: String[]<br/>
+		Default: none<br/>
+		Values to use as the labels for the values of your data.  These values go across the Y axis of the chart.</dd>
+		<dt><strong>barSpacing</strong></dt>
+		<dd>Type: number<br/>
+		Default: none<br/>
+		Specify the spacing between bars on the chart in pixels.</dd>
+		<dt><strong>barWidth</strong></dt>
+		<dd>Type: number<br/>
+		Default: none<br/>
+		Specify the width of the bars on the chart in pixels.</dd>
+		<dt><strong>colour</strong></dt>
+		<dd>Type: String<br/>
+		Default: none<br/>
+		The RGB value for the colour you want the lines in the chart to be.  To set multiple colours use a comma delimited list of RGB values (e.g. '99cc00,cc9900').</dd>
+		<dt><strong>dataScaling</strong></dt>
+		<dd>Type: JSON OBJECT<br/>
+		Default: none<br/>
+		By default the values that you can enter range from 0 - 100. Google Charts will ignore any value you enter which is less than 0, and cap any values higher than 100 at 100. You can override this behaviour with the use of the dataScaling parameter in the options object.  Use the dataScaling option to specify a top and bottom value for your data to be scaled against (e.g. dataScaling: {top: 230, bottom: 120}.</dd>
+		<dt><strong>grouped</strong></dt>
+		<dd>Type: boolean<br/>
+		Default: false<br/>
+		Set to true if your dataSource has multiple tracks of data that you want to group together.</dd>
+		<dt><strong>labels</strong></dt>
+		<dd>Type: String[]<br/>
+		Default: none<br/>
+		Values to use as the labels for your data.  These values go across the X axis of the chart.</dd>
+		<dt><strong>legend</strong></dt>
+		<dd>Type: string<br/>
+		Default: none<br/>
+		A comma delimited list of values to display in a legend.  The legend will use any colour values passed in via the colour parameter in the options object.</dd>
+		<dt><strong>showLabels</strong></dt>
+		<dd>Type: boolean<br/>
+		Default: true<br/>
+		Set to false if your dataSource has data for labels but you do not want them to be shown in the chart.</dd>
+		<dt><strong>size</strong></dt>
+		<dd>Type: string<br/>
+		Default: '100x100'<br/>
+		'x' delimited values for the height and width of the chart.</dd>
+		<dt><strong>type</strong></dt>
+		<dd>Type: string<br/>
+		Default: 'horizontal'<br/>
+		Set to 'vertical' if you want a vertical bar chart, otherwise leave empty or set to 'horizontal' for a horizontal bar chart.</dd>
+	</dl>
+	</dd>
+</dl>
