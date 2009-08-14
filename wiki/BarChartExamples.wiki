@@ -79,3 +79,33 @@ jsEasyCharts.bar(
 }}}
 
 [http://chart.apis.google.com/chart?chs=250x150&chd=t:30,10,40,20&cht=bvs&chxl=0:|Hazelnut|Apricots|Almond|Walnuts&chco=&chxt=x,y&chds=,140&chbh=20,30&foo=.png]
+
+== Data scaling a bar chart ==
+
+By default the values that you can enter range from 0 - 100. Google Charts will ignore any value you enter which is less than 0, and cap any values higher than 100 at 100. You can override this behaviour with the use of the dataScaling parameter in the options object.
+
+{{{
+jsEasyCharts.bar(
+        'bar5',
+        {
+                November: 80,
+                December: -70,
+                January: 120,
+                Febuary: -40
+        },
+        {
+                type: 'vertical',
+                size: '250x300',
+                barWidth: 50,
+                barSpacing: 5,
+                dataScaling: {
+                        top: 140, 
+                        bottom: -80
+                },
+                axisLabels: ['-80', '-60', '-40', '-20', '0', '20', 
+                            '40', '60', '80', '100', '120', '140']
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=250x300&chd=t:80,-70,120,-40&cht=bvs&chxl=0:|November|December|January|Febuary|1:|-80|-60|-40|-20|0|20|40|60|80|100|120|140&chco=&chxt=x,y&chds=,140&chbh=50,5&chds=-80,140&foo=.png]
