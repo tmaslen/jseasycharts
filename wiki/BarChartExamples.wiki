@@ -36,3 +36,22 @@ jsEasyCharts.bar(
 }}}
 
 [http://chart.apis.google.com/chart?chs=300x150&chd=t:10,20,30,40&cht=bhs&chxl=0:|Apricots|Walnuts|Hazelnut|Almond&chco=99cc00&chxt=y,x&chds=,140&foo=.png]
+
+== Defining labels and setting data with a HTML table ==
+
+You can define the data for the chart using a (2 row/column only) table. The options object also allows you to override the labels (from the data source) and set axis labels for the chart.
+
+{{{
+jsEasyCharts.bar(
+        'bar3',
+        'dataBar3',
+        {
+                type: 'horizontal',
+                size: '200x120',
+                labels: ['Lib Dem', 'Lab', 'Con'],
+                axisLabels: ['0%', '25%', '50%', '75%', '100%']
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=200x120&chd=t:33,16,20|33,16,20&cht=bhs&chxl=0:|Lib%20Dem|Lab|Con|1:|0%|25%|50%|75%|100%&chco=&chxt=y,x&chds=,140&foo=.png]
