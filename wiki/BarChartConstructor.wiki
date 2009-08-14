@@ -1,4 +1,4 @@
-#summary Bar Chart Constructor
+#summary Constructor API for the Bar Chart
 #labels Constructor,BarChart
 
 {{{
