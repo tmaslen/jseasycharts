@@ -1,4 +1,5 @@
 #summary Constructor API for the Line Chart
+#labels constructor,LineChart
 
 {{{
 jsEasyCharts.line(attachTo, dataSource, opts);
