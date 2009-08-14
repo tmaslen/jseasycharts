@@ -104,3 +104,36 @@ jsEasyCharts.line(
 }}}
 
 [http://chart.apis.google.com/chart?chs=600x300&chd=t:20,17,13,8,4,-1,1,0,-1,-3,-6,-5,-2,2&cht=lc&chxl=0:|week01|week02|week03|week04|week05|week06|week07|week08|week09|week10|week11|week12|week13|week14|1:|-10|-8|-6|-4|-2|0|2|4|6|8|10|12|14|16|18|20&chco=&chxt=x,y&chds=-15,25&foo=.png]
+
+== Multiple data tracks with an array on a line chart ==
+
+You can define more than one track by passing in a multi-dimensional array. You can then set the colour of each track by passing in a list of comma seperated RGB values into the colour param of the options object.
+
+{{{
+jsEasyCharts.line(
+        'line5',
+        [[86,75,82,69,50,34], [29,22,25,40,49,55]],
+        {
+                size: '200x150',
+                colour: '99cc00,cc9900'
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=200x150&chd=t:86,75,82,69,50,34|29,22,25,40,49,55&cht=lc&&chco=99cc00,cc9900&foo=.png]
+
+You can give the chart a legend, so users know what multiple tracks relate to. Add the param "legend" to the options object, give it the value of a comma or pipe seperated list.
+
+{{{
+jsEasyCharts.line(
+        'line6',
+        [[86,75,82,69,50,34], [29,22,25,40,49,55]],
+        {
+                size: '270x150',
+                colour: '99cc00,cc9900',
+                legend: 'POUND,EURO'
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=270x150&chd=t:86,75,82,69,50,34|29,22,25,40,49,55&cht=lc&&chco=99cc00,cc9900&&chdl=POUND|EURO&foo=.png]
