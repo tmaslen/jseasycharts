@@ -12,3 +12,27 @@ jsEasyCharts.bar(
 }}}
 
 [http://chart.apis.google.com/chart?chs=100x100&chd=t:60,40,10&cht=bhs&&chco=&&chds=,140&foo=.png]
+
+== Setting data with JSON, sizing and colouring ==
+
+As well as defining the data for the chart as an array, you can also pass in a JSON object. If you do this, the labels in the JSON object will be used in the chart. Note that if labels are supplied for the chart, then axis labels will be added also.
+
+A third optional param in the method call is an options object. Here you can set the size and colouring of the chart.
+
+{{{
+jsEasyCharts.bar(
+        'bar4',
+        {
+                Apricots: 10,
+                Walnuts: 20,
+                Hazelnut: 30,
+                Almond: 40
+        },
+        {
+                colour: 'ff0000',
+                size: '110x110'
+        }
+);
+}}}
+
+[http://chart.apis.google.com/chart?chs=300x150&chd=t:10,20,30,40&cht=bhs&chxl=0:|Apricots|Walnuts|Hazelnut|Almond&chco=99cc00&chxt=y,x&chds=,140&foo=.png]
