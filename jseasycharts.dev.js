@@ -20,41 +20,10 @@ var jsEasyCharts
 					throw new Error("You must define an element to append the pie chart to");
 				}
 			// Data
-				// Need to check data is numeric!
-				var data;
-				if (typeof values == 'undefined') {
-					// Nothing passed in
-					throw new Error("No data entered to make a pie chart");
-				} else {
-					if (typeof values.length == 'undefined') {
-						// json object passed in
-						data = 'chd=t:' + mapJsonToChartValues(values);
-						labels = 'chl=' + mapJsonToChartLabels(values);
-					} else {
-						if (
-								(document.getElementById(values) != null) &&
-								(document.getElementById(values).nodeName.toLowerCase() == "table")
-						) {
-							// table passed in...
-							// Get a ref for the Table elm
-							values = document.getElementById(values);
-							// table_check returns array telling us how to process table data.
-							// E.g. ['vertical', 3] = data tracks run down the table, and there are 3 columns of data.
-							// E.g. ['horizontal', 1] = data tracks run left to right across the table, and there is 1 row of data
-							var checkedTable = table_check(values);
-							if (checkedTable[0] == 'vertical') {
-								data = 'chd=t:' + mapVerticalTableToChartValues(values, checkedTable[1]);
-								labels = 'chl=' + mapVerticalTableToChartLabels(values);
-							} else {
-								data = 'chd=t:' + mapHorizontalTableToChartValues(values, checkedTable[1]);
-								labels = 'chl=' + mapHorizontalTableToChartLabels(values);
-							}
-						} else {
-							// array passed in
-							data = 'chd=t:' + arrayToData(values);
-						}
-					}
-				}
+				var parseDataObject = parseData(values);
+				data = parseDataObject.data;
+				labels = parseDataObject.labels;
+				
 
 
 		// optional
@@ -265,6 +234,71 @@ var jsEasyCharts
 
 			return new genericChart(attachTo, values, opts, ["p", "pc", "p3"], 'pie', additionalPairValues);
 
+		},
+
+
+		// =========================
+		// Side-By-Side chart object
+		// =========================
+		sideBySide: function(attachTo, values, opts) {
+		
+			//var additionalPairValues = '';
+
+			// WE'LL NEED TO PARSE THE OPTS OBJECT
+
+			// WE CAN'T ALLOW NEGATIVE NUMBERS IN, BECAUSE THE FIRST TRACK WILL BE SET TO A NEGATIVE NUMBER AND WE CAN'T HAVE NEGATIVE NEGATIVE NUMBERS
+
+			// Sort the data.  The data for the left side will actually need to be negative values.
+
+				// Fetch the data using parseData, this returns the data as a googlecharts friendly string,
+				// but we actually need it as an array...
+				var data = parseData(values).data.substr(6).split("|");
+				// DataSet needs to have two tracks
+				if (data.length != 2)
+				{
+					throw new Error("jsEasyCharts.sideBySide chart requires two data tracks only.  You have supplied " + data.length);
+				}
+				// Split strings into arrays
+				data[0] = data[0].split(",");
+				data[1] = data[1].split(",");
+				
+				// Set first track into minus numbers
+				for (var z = 0, length = data[0].length; z < length ; z++)
+				{
+					data[0][z] = negativeNumber(data[0][z])
+				}
+			
+			// Now we need to play with the dataScaling.
+
+				// Set default value
+				opts.dataScaling = opts.dataScaling || {top: 100, bottom: 0};
+
+				// Can't let in negative values (yet)
+				if (
+					   (opts.dataScaling.top < 0)
+					|| (opts.dataScaling.bottom < 0)
+				) {
+					throw new Error("jsEasyCharts.sideBySide chart cannot handle dataScaling with values less than 0");
+				}
+
+				// store current dataScaling values so we can reapply them for the right side of the chart
+				var originalDataScaling = {top: 0, bottom: 100};
+				originalDataScaling.top = opts.dataScaling.top;
+				originalDataScaling.bottom = opts.dataScaling.bottom;
+
+				// set dataScaling to negative values for the left side of the chart
+				opts.dataScaling.top = negativeNumber(originalDataScaling.bottom);
+				opts.dataScaling.bottom = negativeNumber(originalDataScaling.top);
+
+
+			// Left chart
+			this.bar(attachTo, data[0], opts);
+
+			opts.dataScaling = originalDataScaling;
+
+			// Right chart
+			this.bar(attachTo, data[1], opts);
+
 		}
 
 
@@ -274,14 +308,63 @@ var jsEasyCharts
 
 
 
+	function negativeNumber(num) {
+		if (isNaN(num)) {
+			throw new Error("The data source for the chart must be numeric.");
+			return false;
+		}
+		return parseInt("-" + num);
+	}
+
+
+	// This is the most important part of jsEasyCharts.
+	// It takes the dataSource (values) which could be a table,
+	// JSON or an array and processes it into a googleCharts
+	// friendly string of chart values
+	function parseData(values) {
+		
+		var data = '',
+			labels = '';
+		if (typeof values == 'undefined') {
+			// Nothing passed in
+			throw new Error("No data entered to make a pie chart");
+		} else {
+			if (typeof values.length == 'undefined') {
+				// json object passed in
+				data = 'chd=t:' + mapJsonToChartValues(values);
+				labels = 'chl=' + mapJsonToChartLabels(values);
+			} else {
+				if (
+						(document.getElementById(values) != null) &&
+						(document.getElementById(values).nodeName.toLowerCase() == "table")
+				) {
+					// table passed in...
+					// Get a ref for the Table elm
+					values = document.getElementById(values);
+					// table_check returns array telling us how to process table data.
+					// E.g. ['vertical', 3] = data tracks run down the table, and there are 3 columns of data.
+					// E.g. ['horizontal', 1] = data tracks run left to right across the table, and there is 1 row of data
+					var checkedTable = table_check(values);
+					if (checkedTable[0] == 'vertical') {
+						data = 'chd=t:' + mapVerticalTableToChartValues(values, checkedTable[1]);
+						labels = 'chl=' + mapVerticalTableToChartLabels(values);
+					} else {
+						data = 'chd=t:' + mapHorizontalTableToChartValues(values, checkedTable[1]);
+						labels = 'chl=' + mapHorizontalTableToChartLabels(values);
+					}
+				} else {
+					// array passed in
+					data = 'chd=t:' + arrayToData(values);
+				}
+			}
+		}
+		return {"data" : data, "labels" : labels};
+
+	}
 
 
 
-
-
-
-
-
+	// Converts array into googleCharts friendly data string
 	function arrayToData(values) {
 		// Are we dealing with multi-dimensional array
 		// If so then we need to convert array to a string, but with a 
