@@ -36,6 +36,10 @@ jsEasyCharts.pie(attachTo, dataSource, opts);
 		<dd>Type: string<br/>
 		Default: '100x100'<br/>
 		'x' delimited values for the height and width of the chart.</dd>
+		<dt><strong>type</strong></dt>
+		<dd>Type: string<br/>
+		Default: n/a<br/>
+		Set to '3d' if you want a three dimensional pie chart.</dd>
 	</dl>
 	</dd>
 </dl>
