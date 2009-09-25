@@ -10,20 +10,20 @@ var jsEasyCharts
 		chartSubTypes = (chartSubTypes || '');
 		var labels = '',
 			url = 'http://chart.apis.google.com/chart?',
-			chartObject = {}; // object to return
+			newLabels = '',
+			newAxisLabels = '',
+			labelOrientation = '';
 
 		// required
 			// attachTo
-				if (typeof attachTo == 'string') {
-					attachTo = document.getElementById(attachTo);
-				}
-				if (attachTo == null) {
-					throw new Error("You must define an element to append the pie chart to");
-				}
+				attachTo = getElementFromAttachTo(attachTo);
 			// Data
 				var parseDataObject = parseData(values);
 				data = parseDataObject.data;
 				labels = parseDataObject.labels;
+
+				// NEW LABEL CODE
+				newLabels = parseDataObject.labels;
 				
 
 
@@ -31,12 +31,6 @@ var jsEasyCharts
 			// Size
 				var size = 'chs=' + (opts.size || '100x100');
 			// Type
-				// ============================================================================================
-				// NEW LABEL FUNCTIONALITY
-				chartObject.type = chartType;
-				chartObject.subType = opts.type || chartSubTypes[0];
-				// ============================================================================================
-
 				opts.type = (convert_type_names(opts.type) || chartSubTypes[0]);
 				// If user defined name not in array of accepted names then error
 				if( ('|' + chartSubTypes.toString() + '|').replace(/,/g, '|').indexOf('|' + opts.type + '|') == -1  ) {
@@ -48,36 +42,19 @@ var jsEasyCharts
 				}
 				var type = 'cht=' + opts.type;
 			// Label
+				if(isArray(opts.labels)) {
+					
+					// Fix an odd behaviour in Google Charts, labels appear in wrong order if bar chart is set to horizontal.
+					if (opts.graphAxis == 'horizontal') {
+						opts.labels.reverse();
+					}
 
-				// ============================================================================================
-				// NEW LABEL FUNCTIONALITY
-				// create labels object
-				chartObject.labels = {
-					x:'',
-					y:'',
-					r:'',
-					t:''
-				};
-				// set show property
-				chartObject.labels.show = opts.showLabels || true;
-				// add labels to labels.x (default position in 
-				// label object (x = horizontal on a chart) for 
-				// labels)
-				if(opts.labels) {
-					chartObject.labels.x = opts.labels
-				}
-				// add axis labels
-				if (
-					   (opts.axisLabels)
-					&& (typeof opts.axisLabels.length == 'number')
-				) {
-					chartObject.labels.y = opts.axisLabels;
-				}
-				// ============================================================================================
-
-				// OLD LABEL FUNCTIONALITY
-				if(typeof opts.labels != 'undefined') {
+					// if a labels property is passed in through the options object, then overwrite any label data we have
+					// form label array into Google Charts friendly string and add it to a querystring pair
 					labels = 'chl=' + opts.labels.toString().replace(/,/g, '|');
+
+					// NEW LABEL CODE
+					newLabels = opts.labels.toString().replace(/,/g, '|');
 				}
 			// Colour
 				var colour = 'chco=' + (opts.colour || '');
@@ -99,9 +76,14 @@ var jsEasyCharts
 
 				case 'pie' :
 					opts.showLabels = (typeof opts.showLabels == 'undefined') ? true : opts.showLabels;
-					if (opts.showLabels == false)
-					{
+					if (opts.showLabels == false) {
 						labels = '';
+						// NEW LABEL CODE
+						newLabels = '';
+					}
+					// NEW LABEL CODE
+					else {
+						newLabels = 'chl=' + newLabels;
 					}
 					break;
 
@@ -109,14 +91,87 @@ var jsEasyCharts
 				case 'bar' :
 				case 'line' :
 
+					// NEW LABEL CODE
+					// labels
+						// if user has set the labels not to be shown then remove them
+							if (opts.showLabels == false) {
+								newLabels = '';
+							}
+						// if there are no labels, then we need to pass in empty values to stop google chart giving each track a numeric label
+							if (newLabels == '')
+							{
+								//
+							}
+							console.log(attachTo);
+							console.log(data);
+							var tmp = new Array(data.substr(6).split(",").length+1).join("|");
+							console.log(tmp);
+
+
+					// axisLabels
+						// decide whether or not to show axis labels
+							opts.showAxisLabels = (function(){
+								// has user specificied no axis labels...
+								if (opts.showAxisLabels === false) {
+									return false;
+								}
+								// if user has defined axis label values then show axis labels...
+								if (opts.axisLabels) {
+									return true;
+								}
+								// otherwise consider axis labels to be off by default
+								return false;
+							})();
+
+						// Add axis label data?
+							if (opts.showAxisLabels === true) {
+								newAxisLabels = opts.axisLabels.toString().replace(/,/g, '|');
+							}
+
+
+					// label orientation
+						// this take the chxl param, and tells google 
+						// charts which track should appear on which side of the chart.
+						// It does this by looking by checking to see if the graph is a 
+						// 'vertical' or 'horizontal' type.
+						labelOrientation = 'chxt=';
+						if (opts.graphAxis == 'vertical') {
+							labelOrientation += 'x,y';
+						} else {
+							labelOrientation += 'y,x';
+						}
+
+					// combine labels together under chxl
+
+
+
+
+
+
+
 					// Show axis labels: default true - use this to turn off the labelling
-						opts.showAxisLabels = (typeof opts.showAxisLabels == 'undefined') ? true : opts.showAxisLabels;
+						//opts.showAxisLabels = (typeof opts.showAxisLabels == 'undefined') ? true : opts.showAxisLabels;
+
+					// decide whether or not to show axis labels
+						opts.showAxisLabels = (function(){
+							// has user specificied no axis labels...
+							if (opts.showAxisLabels === false) {
+								return false;
+							}
+							// if user has defined axis label values then show axis labels...
+							if (opts.axisLabels) {
+								return true;
+							}
+							// otherwise consider axis labels to be off by default
+							return false;
+						})();
 
 					// Axis Labels
 						var axisLabels = '';
 						if ( 
-							   (labels != '') 
-							&& (opts.showAxisLabels === true)
+//							   (labels != '') 
+//							&& (opts.showAxisLabels === true)
+							opts.showAxisLabels === true
 						) {
 
 							// For this type of chart we want to use the labels as axis labels.
@@ -131,10 +186,7 @@ var jsEasyCharts
 							}
 
 							// Add axisLabels if defined as an array
-							if (
-								   (typeof opts.axisLabels != 'undefined')
-								&& (typeof opts.axisLabels.length == 'number')
-							) {
+							if (isArray(opts.axisLabels)) {
 								labels += '|1:|' + opts.axisLabels.toString().replace(/,/g, '|');
 							}
 
@@ -192,23 +244,7 @@ var jsEasyCharts
 		// Add img
 			var img_src = url + size + '&amp;' + data + '&amp;' + type + '&amp;' + labels + '&amp;' + colour + '&amp;' + axisLabels + additionalPairValues;
 			attachTo.innerHTML += '<img src="' + img_src + '" alt="' + opts.altText + '" height="' + size.substr(4).split('x')[1] + '" width="' + size.substr(4).split('x')[0] + '" />';
-	
 
-		// takes the data from chartObject.labels and return google friendly key-value string
-		chartObject.setLabels = function() {
-			if (
-					(chartObject.labels.show == true) // if user has does want to show labels
-					&& (chartObject.labels.x != '')   // and some labels have been added then add some...
-			) {
-				var label = 'chl=' + chartObject.labels.x.toString().replace(/,/g, '|');
-
-			}
-			else {
-				return '';
-			}
-		}
-
-		return chartObject;
 	}
 
 
@@ -219,10 +255,7 @@ var jsEasyCharts
 
 
 
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// NAMESPACE jsEasyCharts.  All properties call genericChart (should eventually be 
-	// objects that extend genericChart.
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 	jsEasyCharts = {
 
@@ -249,13 +282,17 @@ var jsEasyCharts
 		// ================
 		bar: function(attachTo, values, opts) {
 
-			var additionalPairValues = '&amp;chds=,140';
+			var additionalPairValues = '&amp;chds=,140'; // why does the bar chart need these additional values?  I can't remember!
 			opts = (opts || {});
+
+			// Added this on so sideBySide chart can pass in additional pair values
+			if (opts.additionalPairValues)
+			{
+				additionalPairValues += opts.additionalPairValues;
+			}
 
 			// Work out which way the graph is pointing
 			opts.graphAxis = ( opts.type == 'vertical' ) ? 'vertical' : 'horizontal';
-			// Old code, type names have been changed to names that are easier to understand
-			// opts.graphAxis = ( (opts.type || 'bhs').substr(1,1) == 'v' ) ? 'vertical' : 'horizontal';
 
 			// Bar width and spacing - http://code.google.com/apis/chart/styles.html#bar_width
 			if (
@@ -296,12 +333,17 @@ var jsEasyCharts
 		// Side-By-Side chart object
 		// =========================
 		sideBySide: function(attachTo, values, opts) {
-		
-			// Add some defaults...
-			opts = opts || {};
-			opts.dataScaling = opts.dataScaling || {top: 100, bottom: 0};
 
-			//var additionalPairValues = '';
+			// CURRENT ISSUES : 
+			//		LABELS AND DATA NOT IN THE SAME ORDER?
+			//		******
+			//		IF VERTICAL BAR CHART THEN REVERSE LABELS?
+			//		chxt = y,x not in the right order for the current version.  correct on the server?
+			//		******
+			//		WHAT HAPPENS WHEN NO LABELS?
+			//		WHAT HAPPENS WITH DATA SCALING?
+
+			// CAN WE HAVE AXISLABELS WITHOUT LABELS?  AND LABELS WITHOUT AXISLABELS?  SET UP TEST TO MAKE SURE
 
 			// WE'LL NEED TO PARSE THE OPTS OBJECT
 
@@ -309,10 +351,10 @@ var jsEasyCharts
 
 			// Sort the data.  The data for the left side will actually need to be negative values.
 
-				// Fetch the data using parseData function, this returns the data as a googlecharts friendly string,
+				// Fetch the data using parseData, this returns the data as a googlecharts friendly string,
 				// but we actually need it as an array...
 				var data = parseData(values).data.substr(6).split("|");
-				// DataSet needs to have two tracks to be used with a sideBySide chart
+				// DataSet needs to have two tracks
 				if (data.length != 2)
 				{
 					throw new Error("jsEasyCharts.sideBySide chart requires two data tracks only.  You have supplied " + data.length);
@@ -326,40 +368,93 @@ var jsEasyCharts
 				{
 					data[0][z] = negativeNumber(data[0][z])
 				}
+			
+			// Now we need to play with the dataScaling.
+
+				// Set default value
+				opts.dataScaling = opts.dataScaling || {top: 100, bottom: 0};
+
+				// Can't let in negative values (yet)
+				if (
+					   (opts.dataScaling.top < 0)
+					|| (opts.dataScaling.bottom < 0)
+				) {
+					throw new Error("jsEasyCharts.sideBySide chart cannot handle dataScaling with values less than 0");
+				}
+
+				// store current dataScaling values so we can reapply them for the right side of the chart
+				var originalDataScaling = {top: 0, bottom: 100};
+				originalDataScaling.top = opts.dataScaling.top;
+				originalDataScaling.bottom = opts.dataScaling.bottom;
+
+				// set dataScaling to negative values for the left side of the chart
+				opts.dataScaling.top = negativeNumber(originalDataScaling.bottom);
+				opts.dataScaling.bottom = negativeNumber(originalDataScaling.top);
 
 
-			// Don't allow negative values (yet) into dataScaling.
-			if (
-				   (opts.dataScaling.top < 0)
-				|| (opts.dataScaling.bottom < 0)
-			) {
-				throw new Error("jsEasyCharts.sideBySide chart cannot handle dataScaling with values less than 0");
-			}
+			// Chart size, we need to set the width to be half of what is set by the user.
+				
+				// give it a default value first
+				opts.size = opts.size || '100x100'
+
+				// Cut the width value in half
+				var originalSize = opts.size
+				opts.size = (originalSize.substr(0, originalSize.indexOf('x')) / 2) + originalSize.substr(originalSize.indexOf('x'))
 
 
-			// Make a copy of the opts object cus we need to reverse some of the values that are passed into the left chart
-			var originalOpts = opts.clone();
+			// Give the two images a parent element that will stop them from line breaking
+				var parentDiv = document.createElement('DIV');
+				parentDiv.id = 'jsEasyChartSideBySide';
+				parentDiv.style.width = originalSize.substr(0, originalSize.indexOf('x')) + "px";
+				attachTo = getElementFromAttachTo(attachTo);
+				attachTo.appendChild(parentDiv);
+				attachTo = document.getElementById('jsEasyChartSideBySide');
+
 
 
 			// Left chart
-
-				// set dataScaling to negative values for the left side of the chart
-				opts.dataScaling.top = negativeNumber(originalOpts.dataScaling.bottom);
-				opts.dataScaling.bottom = negativeNumber(originalOpts.dataScaling.top);
-
-				// set axis labels to be in reverse order
-				if (opts.axisLabels)
+				var originalLabels = '';
+				if (opts.labels)
 				{
-					opts.axisLabels.reverse();
+					originalLabels = opts.labels.slice(0);
+					opts.labels = '';
 				}
+				// axis labels need to be reversed like all the data on the left side
+				reverseAxisLabels(opts);
+				// chm pair removes the line on the left side of the chart.
+				opts.additionalPairValues = '&chg=10,100';// '&chm=r,FFFFFF,0,-0.01,0.01,1|R,FFFFFF,0,0.995,1.02,1&chg=10,100';
+				// call bar()
+				this.bar(attachTo, data[0], opts);
 
-				var leftChart = this.bar(attachTo, data[0], opts);
-				console.log(leftChart);
+			// Reset dataScaling to its original value
+				opts.dataScaling = originalDataScaling;
 
 
 			// Right chart
-			
-				this.bar(attachTo, data[1], originalOpts);
+				if (originalLabels != '')
+				{
+					opts.labels = originalLabels;
+				}
+				// put the axis labels back in the correct order
+				reverseAxisLabels(opts);
+				// remove the value from additionalParValues as we don't require them for the right side
+				opts.additionalPairValues = '&chm=r,FFFFFF,0,-0.01,0.01,1|r,000000,0,0.998,1,1|R,000000,0,0.999,1,1&chg=10,100';
+				// call bar()
+				this.bar(attachTo, data[1], opts);
+
+			// PROBABLY WON'T NEED THIS
+			// Bit of css to make the images align nicely
+			/*
+				arrImg = attachTo.getElementsByTagName('IMG');
+				for(var p = 0, arrLen = arrImg.length; p < arrLen; p++) {
+					arrImg[p].style.display = 'block';
+					arrImg[p].style.float = 'left';
+				}
+			*/
+
+			// last thing is to remove the id from parentDiv (we can't have two elements on the page with the same id).
+				attachTo.id = '';
+				attachTo.className = 'jsEasyChartSideBySide';
 
 		}
 
@@ -368,12 +463,42 @@ var jsEasyCharts
 
 
 
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// HELPER FUNCTIONS
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// Checks param 'obj' is an array
+	function isArray(obj) {
+		if (
+			   (typeof obj == 'object')
+			&& (typeof obj.length == 'number')
+		) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
-	// Changes the passed in number to its negative equivalent.
-	// Could use a formula (x = x-x2) but figure it is quicker to parse it with a "-" infront
+	// If an options object has an axisLabels property then it reverses the values of the array.
+	// Should this check to see if the property is an array?
+	function reverseAxisLabels(opts) {
+		if (opts.axisLabels) {
+			opts.axisLabels.reverse();
+		}
+		return opts;
+	}
+
+	// pass in attachTo param, if a string this is changed into the DOM elm of the id.
+	// should always return a DOM elm.
+	function getElementFromAttachTo(attachTo) {
+		if (typeof attachTo == 'string') {
+			attachTo = document.getElementById(attachTo);
+		}
+		if (attachTo == null) {
+			throw new Error("You must define an element to append the pie chart to");
+		}
+		return attachTo;
+	}
+
+
+	// returns a negative equivalent of any number passed in.
 	function negativeNumber(num) {
 		if (isNaN(num)) {
 			throw new Error("The data source for the chart must be numeric.");
@@ -467,7 +592,6 @@ var jsEasyCharts
 		return r;
 	}
 
-	// Converts deep JSON object into google charts friendly data string
 	function mapJsonWithMultipleTracksToChartValues(values) {
 		var r = '';
 		for (track in values) {
@@ -611,9 +735,6 @@ var jsEasyCharts
 		return arr_values.toString().replace(/,/g, '|');
 	}
 	
-	// NOT SURE WHY WE HAVE TWO FUNCTIONS HERE THAT SEEM TO OD A SIMILIAR THING.
-	// WORK OUT WHAT THESE DO AND REFACTOR
-
 	function convert_type_names(type) {
 		switch(type) {
 			case 'horizontal': 
@@ -624,9 +745,6 @@ var jsEasyCharts
 				break;
 			case '3d': 
 				return 'p3';
-				break;
-			case 'flat': 
-				return 'pc';
 				break;
 		}
 		return type;
@@ -654,34 +772,6 @@ var jsEasyCharts
 		}
 		return type;
 	}
-
-
-	// Extends Object to allow copying.  Taken from...
-	// http://my.opera.com/GreyWyvern/blog/show.dml/1725165
-	Object.prototype.clone = function() {
-		var newObj = (this instanceof Array) ? [] : {};
-		for (i in this) {
-			if (i == 'clone') {
-				continue;
-			}
-			if (this[i] && typeof this[i] == "object") {
-				newObj[i] = this[i].clone();
-			} 
-			else {
-				newObj[i] = this[i];
-			}
-		}
-		return newObj;
-	};
-
-
-
-
-
-
-
-
-
 
 	return jsEasyCharts;
 
