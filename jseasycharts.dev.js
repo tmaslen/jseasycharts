@@ -8,10 +8,9 @@ var jsEasyCharts
 
 		opts = (opts || {});
 		chartSubTypes = (chartSubTypes || '');
-		var labels = '',
-			url = 'http://chart.apis.google.com/chart?',
-			newLabels = '',
-			newAxisLabels = '',
+		var url = 'http://chart.apis.google.com/chart?',
+			labels = '',
+			axisLabels = '',
 			labelOrientation = '';
 
 		// required
@@ -23,9 +22,7 @@ var jsEasyCharts
 				labels = parseDataObject.labels;
 
 				// NEW LABEL CODE
-				newLabels = parseDataObject.labels;
-				
-
+				labels = parseDataObject.labels.substr(4);
 
 		// optional
 			// Size
@@ -51,10 +48,7 @@ var jsEasyCharts
 
 					// if a labels property is passed in through the options object, then overwrite any label data we have
 					// form label array into Google Charts friendly string and add it to a querystring pair
-					labels = 'chl=' + opts.labels.toString().replace(/,/g, '|');
-
-					// NEW LABEL CODE
-					newLabels = opts.labels.toString().replace(/,/g, '|');
+					labels = opts.labels.toString().replace(/,/g, '|');
 				}
 			// Colour
 				var colour = 'chco=' + (opts.colour || '');
@@ -78,12 +72,9 @@ var jsEasyCharts
 					opts.showLabels = (typeof opts.showLabels == 'undefined') ? true : opts.showLabels;
 					if (opts.showLabels == false) {
 						labels = '';
-						// NEW LABEL CODE
-						newLabels = '';
 					}
-					// NEW LABEL CODE
 					else {
-						newLabels = 'chl=' + newLabels;
+						labels = 'chl=' + labels;
 					}
 					break;
 
@@ -91,26 +82,9 @@ var jsEasyCharts
 				case 'bar' :
 				case 'line' :
 
-					// NEW LABEL CODE
-					// labels
-						// if user has set the labels not to be shown then remove them
-							if (opts.showLabels == false) {
-								newLabels = '';
-							}
-						// if there are no labels, then we need to pass in empty values to stop google chart giving each track a numeric label
-							if (newLabels == '')
-							{
-								//
-							}
-							console.log(attachTo);
-							console.log(data);
-							var tmp = new Array(data.substr(6).split(",").length+1).join("|");
-							console.log(tmp);
-
-
 					// axisLabels
 						// decide whether or not to show axis labels
-							opts.showAxisLabels = (function(){
+							opts.showAxisLabels = (function() {
 								// has user specificied no axis labels...
 								if (opts.showAxisLabels === false) {
 									return false;
@@ -125,78 +99,85 @@ var jsEasyCharts
 
 						// Add axis label data?
 							if (opts.showAxisLabels === true) {
-								newAxisLabels = opts.axisLabels.toString().replace(/,/g, '|');
+								axisLabels = opts.axisLabels.toString().replace(/,/g, '|');
 							}
+					
+					// labels
+						// if user has set the labels not to be shown then remove them
+							if (opts.showLabels == false) {
+								labels = '';
+							}
+						// if there are no labels but there are axisLabels, then we need to 
+						// PASS IN EMPTY VALUES to stop google chart giving each track a 
+						// numeric label
+							if (
+								   (labels == '')
+								&& (axisLabels != '')
+							) {
+								// *** IMPORTANT ***	I thought this bit should check for multiple tracks, then use the track with the most data
+								//						to get the length from.  But Google Charts will stretch "short" tracks to the same length
+								//						as the longest.  So I'm not sure if we should check for the longest here, or tell the user
+								//						that the tracks need to be the same length?
+								// *** UPDATE ***		Google Charts forum says this is on purpose as you can enter null values in data tracks.
+								//labels = new Array(data.substr(6).split(",").length+1).join("|");
+							}
+
+
+					// This value is used to decide if we want to add the chxt and chxl pairs
+						var combinedLengths = labels.length + axisLabels.length;
 
 
 					// label orientation
-						// this take the chxl param, and tells google 
+						// this take the chxt param, and tells google 
 						// charts which track should appear on which side of the chart.
 						// It does this by looking by checking to see if the graph is a 
 						// 'vertical' or 'horizontal' type.
-						labelOrientation = 'chxt=';
-						if (opts.graphAxis == 'vertical') {
-							labelOrientation += 'x,y';
-						} else {
-							labelOrientation += 'y,x';
+
+						var labelOrientation = '';
+						// Only apply the chxt pair if there is data to add
+						if (combinedLengths > 0) {
+							labelOrientation = 'chxt=';
+							if (opts.graphAxis == 'vertical') {
+								labelOrientation += buildLabelOrientation('x','y', labels.length, axisLabels.length);
+							} else {
+								labelOrientation += buildLabelOrientation('y','x', labels.length, axisLabels.length);
+							}
 						}
+						console.log(labelOrientation);
+
+
 
 					// combine labels together under chxl
-
-
-
-
-
-
-
-					// Show axis labels: default true - use this to turn off the labelling
-						//opts.showAxisLabels = (typeof opts.showAxisLabels == 'undefined') ? true : opts.showAxisLabels;
-
-					// decide whether or not to show axis labels
-						opts.showAxisLabels = (function(){
-							// has user specificied no axis labels...
-							if (opts.showAxisLabels === false) {
-								return false;
-							}
-							// if user has defined axis label values then show axis labels...
-							if (opts.axisLabels) {
-								return true;
-							}
-							// otherwise consider axis labels to be off by default
-							return false;
-						})();
-
-					// Axis Labels
-						var axisLabels = '';
-						if ( 
-//							   (labels != '') 
-//							&& (opts.showAxisLabels === true)
-							opts.showAxisLabels === true
-						) {
-
-							// For this type of chart we want to use the labels as axis labels.
-							// We also want to set the labels to the correct side of the graph
-							axisLabels = 'chxt=';
-							if (opts.graphAxis == 'vertical') {
-								axisLabels += 'x,y';
-								labels = 'chxl=0:|' + labels.substr(4);
-							} else {
-								axisLabels += 'y,x';
-								labels = 'chxl=0:|' + labels.substr(4);
+						
+						// Only apply the chxl pair if there is data to add
+						if (combinedLengths > 0) {
+							
+							// IF labels...
+							if (
+								   (labels.length > 0)
+								&& (axisLabels.length == 0)
+							) {
+								labels = 'chxl=0:|' + labels;
 							}
 
-							// Add axisLabels if defined as an array
-							if (isArray(opts.axisLabels)) {
-								labels += '|1:|' + opts.axisLabels.toString().replace(/,/g, '|');
+							// IF labels AND axisLabels...
+							if (
+								   (labels.length > 0)
+								&& (axisLabels.length > 0)
+							) {
+								labels = 'chxl=0:|' + labels + '|1:|' + axisLabels;
+							}
+
+							// IF axisLabels...
+							if (
+								   (labels.length == 0)
+								&& (axisLabels.length > 0)
+							) {
+								labels = 'chxl=0:|' + axisLabels;
 							}
 
 						}
 
-						// If showAxisLabels set to false then don't show any labels
-						if (opts.showAxisLabels === false)
-						{
-							labels = '';
-						}
 
 					// Manual data scaling
 						if (
@@ -242,7 +223,7 @@ var jsEasyCharts
 				
 
 		// Add img
-			var img_src = url + size + '&amp;' + data + '&amp;' + type + '&amp;' + labels + '&amp;' + colour + '&amp;' + axisLabels + additionalPairValues;
+			var img_src = url + size + '&amp;' + data + '&amp;' + type + '&amp;' + colour + '&amp;' + labels + '&amp;' + labelOrientation + additionalPairValues;
 			attachTo.innerHTML += '<img src="' + img_src + '" alt="' + opts.altText + '" height="' + size.substr(4).split('x')[1] + '" width="' + size.substr(4).split('x')[0] + '" />';
 
 	}
@@ -321,6 +302,8 @@ var jsEasyCharts
 		// Pie chart object
 		// ================
 		pie: function(attachTo, values, opts) {
+
+			opts = (opts || {});
 		
 			var additionalPairValues = '';
 
@@ -334,20 +317,18 @@ var jsEasyCharts
 		// =========================
 		sideBySide: function(attachTo, values, opts) {
 
-			// CURRENT ISSUES : 
-			//		LABELS AND DATA NOT IN THE SAME ORDER?
-			//		******
-			//		IF VERTICAL BAR CHART THEN REVERSE LABELS?
-			//		chxt = y,x not in the right order for the current version.  correct on the server?
-			//		******
-			//		WHAT HAPPENS WHEN NO LABELS?
-			//		WHAT HAPPENS WITH DATA SCALING?
+			opts = (opts || {});
 
-			// CAN WE HAVE AXISLABELS WITHOUT LABELS?  AND LABELS WITHOUT AXISLABELS?  SET UP TEST TO MAKE SURE
+			// WHAT HAPPENS WHEN NO LABELS?
+			// *** RIGHT CHART DOESN'T QUITE LINE UP! ***
 
-			// WE'LL NEED TO PARSE THE OPTS OBJECT
 
+			// WHAT HAPPENS WITH DATA SCALING?
 			// WE CAN'T ALLOW NEGATIVE NUMBERS IN, BECAUSE THE FIRST TRACK WILL BE SET TO A NEGATIVE NUMBER AND WE CAN'T HAVE NEGATIVE NEGATIVE NUMBERS
+
+
+			// IS THERE A PROBLEM WITH HORIZONTAL BAR CHARTS WITH MULTI-TRACKED DATA COMING FROM A TABLE?
+
 
 			// Sort the data.  The data for the left side will actually need to be negative values.
 
@@ -419,6 +400,7 @@ var jsEasyCharts
 					originalLabels = opts.labels.slice(0);
 					opts.labels = '';
 				}
+
 				// axis labels need to be reversed like all the data on the left side
 				reverseAxisLabels(opts);
 				// chm pair removes the line on the left side of the chart.
@@ -438,7 +420,7 @@ var jsEasyCharts
 				// put the axis labels back in the correct order
 				reverseAxisLabels(opts);
 				// remove the value from additionalParValues as we don't require them for the right side
-				opts.additionalPairValues = '&chm=r,FFFFFF,0,-0.01,0.01,1|r,000000,0,0.998,1,1|R,000000,0,0.999,1,1&chg=10,100';
+				opts.additionalPairValues = '&chm=r,FFFFFF,0,-0.01,0.001,1|r,000000,0,0.998,1,1|R,000000,0,0.999,1,1&chg=10,100';
 				// call bar()
 				this.bar(attachTo, data[1], opts);
 
@@ -462,6 +444,25 @@ var jsEasyCharts
 	}
 
 
+	// Creates the value for the chxt name in the Google Chart querystring.
+	// Potential outcomes are: x,y | y,x | x | y
+	// This tells Google Charts where to put the labels and axisLabels
+	function buildLabelOrientation(first, second, labelsLength, axisLabelsLength) {
+		var r = '';
+		if (labelsLength > 0) {
+			r += first;
+		}
+		if (
+			   (labelsLength > 0)
+			&& (axisLabelsLength > 0)
+		) {
+			r += ',';
+		}
+		if (axisLabelsLength > 0) {
+			r += second;
+		}
+		return r;
+	}
 
 	// Checks param 'obj' is an array
 	function isArray(obj) {
@@ -492,7 +493,7 @@ var jsEasyCharts
 			attachTo = document.getElementById(attachTo);
 		}
 		if (attachTo == null) {
-			throw new Error("You must define an element to append the pie chart to");
+			throw new Error("You must define an element to append the chart to");
 		}
 		return attachTo;
 	}
