@@ -143,7 +143,6 @@ var jsEasyCharts
 								labelOrientation += buildLabelOrientation('y','x', labels.length, axisLabels.length);
 							}
 						}
-						console.log(labelOrientation);
 
 
 
@@ -376,7 +375,7 @@ var jsEasyCharts
 			// Chart size, we need to set the width to be half of what is set by the user.
 				
 				// give it a default value first
-				opts.size = opts.size || '100x100'
+				opts.size = opts.size || '300x300'
 
 				// Cut the width value in half
 				var originalSize = opts.size
@@ -392,6 +391,11 @@ var jsEasyCharts
 				attachTo = document.getElementById('jsEasyChartSideBySide');
 
 
+			// Add grid lines if user sets them
+				if (opts.gridLines == true)
+				{
+					opts.additionalPairValues = '&chg=10,100';
+				}
 
 			// Left chart
 				var originalLabels = '';
@@ -403,8 +407,7 @@ var jsEasyCharts
 
 				// axis labels need to be reversed like all the data on the left side
 				reverseAxisLabels(opts);
-				// chm pair removes the line on the left side of the chart.
-				opts.additionalPairValues = '&chg=10,100';// '&chm=r,FFFFFF,0,-0.01,0.01,1|R,FFFFFF,0,0.995,1.02,1&chg=10,100';
+
 				// call bar()
 				this.bar(attachTo, data[0], opts);
 
@@ -420,7 +423,7 @@ var jsEasyCharts
 				// put the axis labels back in the correct order
 				reverseAxisLabels(opts);
 				// remove the value from additionalParValues as we don't require them for the right side
-				opts.additionalPairValues = '&chm=r,FFFFFF,0,-0.01,0.001,1|r,000000,0,0.998,1,1|R,000000,0,0.999,1,1&chg=10,100';
+				opts.additionalPairValues += '&chm=r,FFFFFF,0,-0.01,0.001,1|r,000000,0,0.998,1,1|R,000000,0,0.999,1,1';
 				// call bar()
 				this.bar(attachTo, data[1], opts);
 
@@ -537,6 +540,7 @@ var jsEasyCharts
 					// E.g. ['vertical', 3] = data tracks run down the table, and there are 3 columns of data.
 					// E.g. ['horizontal', 1] = data tracks run left to right across the table, and there is 1 row of data
 					var checkedTable = table_check(values);
+console.log(checkedTable);
 					if (checkedTable[0] == 'vertical') {
 						data = 'chd=t:' + mapVerticalTableToChartValues(values, checkedTable[1]);
 						labels = 'chl=' + mapVerticalTableToChartLabels(values);

@@ -102,6 +102,15 @@
 			}
 		);
 
+		// Data with axis labels but no labels
+		jsEasyCharts.line(
+			'line7',
+			[36,42,53,40,39,30,36,45,50],
+			{
+				size: '200x120',
+				axisLabels: ['0%', '25%', '50%', '75%', '100%']
+			}
+		);
 
 		// BAR CHARTS
 		// **********
@@ -135,7 +144,8 @@
 				type: 'horizontal',
 				size: '200x120',
 //				showAxisLabels: false,
-				labels: ['Lib Dem', 'Lab', 'Con'],
+				showLabels: false,
+				labels: ['Con', 'Lab', 'Lib Dem'],
 				axisLabels: ['0%', '25%', '50%', '75%', '100%']
 			}
 		);
@@ -348,6 +358,7 @@
 <div id="line4"></div>
 <div id="line5"></div>
 <div id="line6"></div>
+<div id="line7"></div>
 
 <div id="bar1"></div>
 <div id="bar2"></div>
@@ -356,16 +367,13 @@
 	<tr>
 		<td>Conservative</td>
 		<td>33</td>
-		<td>33</td>
 	</tr>
 	<tr>
 		<td>Labour</td>
 		<td>16</td>
-		<td>16</td>
 	</tr>
 	<tr>
 		<td>Liberal Democrates</td>
-		<td>20</td>
 		<td>20</td>
 	</tr>
 </table>
