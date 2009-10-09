@@ -1,4 +1,4 @@
-var jsEasyCharts
+var jsEasyCharts;
 
 (function() {
 
@@ -333,7 +333,9 @@ var jsEasyCharts
 
 				// Fetch the data using parseData, this returns the data as a googlecharts friendly string,
 				// but we actually need it as an array...
-				var data = parseData(values).data.substr(6).split("|");
+				var parseDataResults = parseData(values);
+				var data = parseDataResults.data.substr(6).split("|");
+				
 				// DataSet needs to have two tracks
 				if (data.length != 2)
 				{
@@ -371,6 +373,9 @@ var jsEasyCharts
 				opts.dataScaling.top = negativeNumber(originalDataScaling.bottom);
 				opts.dataScaling.bottom = negativeNumber(originalDataScaling.top);
 
+
+			// Labels
+				opts.labels = parseDataResults.labels;
 
 			// Chart size, we need to set the width to be half of what is set by the user.
 				
@@ -540,7 +545,7 @@ var jsEasyCharts
 					// E.g. ['vertical', 3] = data tracks run down the table, and there are 3 columns of data.
 					// E.g. ['horizontal', 1] = data tracks run left to right across the table, and there is 1 row of data
 					var checkedTable = table_check(values);
-console.log(checkedTable);
+
 					if (checkedTable[0] == 'vertical') {
 						data = 'chd=t:' + mapVerticalTableToChartValues(values, checkedTable[1]);
 						labels = 'chl=' + mapVerticalTableToChartLabels(values);
@@ -635,7 +640,7 @@ console.log(checkedTable);
 				counter = 0;
 				arrTD = arrTR[x].getElementsByTagName('TD');
 				for(y = 1, arrTD_len = arrTD.length; y < arrTD_len; y++) {
-					if(isNaN(parseInt(arrTD[y].innerHTML))) {
+					if(isNaN(Number(arrTD[y].innerHTML))) {
 						flag = false;
 					}
 					if(flag == false) {
@@ -660,7 +665,7 @@ console.log(checkedTable);
 			for(x = 1, arrTR = values.getElementsByTagName('TR'), lenTR = arrTR.length; x < lenTR; x++) {
 				arrTD = arrTR[x].getElementsByTagName('TD');
 				for(y = 0, arrTD_len = arrTD.length; y < arrTD_len; y++) {
-					if(isNaN(parseInt(arrTD[y].innerHTML))) {
+					if(isNaN(Number(arrTD[y].innerHTML))) {
 						flag = false;
 					}
 					if(flag == false) {

@@ -15,307 +15,257 @@
 <script type="text/javascript">
 	window.onload = function() {
 
-		// LINE CHARTS
-		// ***********
-
-		// Basic line chart
-		jsEasyCharts.line(
-			'line1',
-			[80,15,45,11,70,55]
-		);
-
-		// Setting data with JSON, sizing and colouring
-		jsEasyCharts.line(
-			document.getElementById('line2'),
-			{
-				January: 70,
-				Febuary: 54,
-				March: 51,
-				April: 60,
-				May: 33,
-				June: 30
-			},
-			{
-				colour: '99cc00',
-				size: '300x150',
-				altText: 'alt text test'
-			}
-		);
-
-		// Defining labels and setting data with a HTML table
-		jsEasyCharts.line(
-			'line3',
-			'dataLine3',
-			{
-				size: '200x120',
-				labels: ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th'],
-				axisLabels: ['0%', '25%', '50%', '75%', '100%']
-			}
-		);
-
-		// Data scaling a line chart
-		jsEasyCharts.line(
-			'line4',
-			{
-				week01: 20,
-				week02: 17,
-				week03: 13,
-				week04: 8,
-				week05: 4,
-				week06: -1,
-				week07: 1,
-				week08: 0,
-				week09: -1,
-				week10: -3,
-				week11: -6,
-				week12: -5,
-				week13: -2,
-				week14: 2
-			},
-			{
-				size: '600x300',
-				dataScaling: {
-					top: 25, 
-					bottom: -15
-				},
-				axisLabels: ['-10', '-8', '-6', '-4', '-2', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20']
-			}
-		);
-
-		// Multiple data tracks with an array on a line chart
-		jsEasyCharts.line(
-			'line5',
-			[[86,75,82,69,50,34], [29,22,25,40,49,55]],
-			{
-				size: '200x150',
-				colour: '99cc00,cc9900'
-			}
-		);
-
-		jsEasyCharts.line(
-			'line6',
-			[[86,75,82,69,50,34], [29,22,25,40,49,55]],
-			{
-				size: '270x150',
-				colour: '99cc00,cc9900',
-				legend: 'POUND,EURO'
-			}
-		);
-
-		// Data with axis labels but no labels
-		jsEasyCharts.line(
-			'line7',
-			[36,42,53,40,39,30,36,45,50],
-			{
-				size: '200x120',
-				axisLabels: ['0%', '25%', '50%', '75%', '100%']
-			}
-		);
-
-		// BAR CHARTS
-		// **********
-
-		// Basic bar chart
-		jsEasyCharts.bar(
-			'bar1',
-			[60,40,10]
-		);
-
-		// Setting data with JSON, sizing and colouring
-		jsEasyCharts.bar(
-			'bar2',
-			{
-				Apricots: 10,
-				Walnuts: 20,
-				Hazelnut: 30,
-				Almond: 40
-			},
-			{
-				colour: '99cc00',
-				size: '300x150'
-			}
-		);
-
-		// Defining labels and setting data with a HTML table
-		jsEasyCharts.bar(
-			'bar3',
-			'dataBar3',
-			{
-				type: 'horizontal',
-				size: '200x120',
-//				showAxisLabels: false,
-				showLabels: false,
-				labels: ['Con', 'Lab', 'Lib Dem'],
-				axisLabels: ['0%', '25%', '50%', '75%', '100%']
-			}
-		);
-
-		// Vertical bar chart
-		jsEasyCharts.bar(
-			'bar4',
-			{
-				Hazelnut: 30,
-				Apricots: 10,
-				Almond: 40,
-				Walnuts: 20
-			},
-			{
-				type: 'vertical',
-				size: '250x150',
-				barWidth: 20,
-				barSpacing: 30
-			}
-		);
-
-		// Data scaling a bar chart
-		jsEasyCharts.bar(
-			'bar5',
-			{
-				November: 80,
-				December: -70,
-				January: 120,
-				Febuary: -40
-			},
-			{
-				type: 'vertical',
-				size: '250x300',
-				barWidth: 50,
-				barSpacing: 5,
-				dataScaling: {
-					top: 140, 
-					bottom: -80
-				},
-				axisLabels: ['-80', '-60', '-40', '-20', '0', '20', '40', '60', '80', '100', '120', '140']
-			}
-		);
-
-		// Multiple data tracks with a JSON object in a bar chart
-		jsEasyCharts.bar(
-			'bar6',
-			{
-				january: {
-					"Tom": 10,
-					"Jake": 20,
-					"Michael": 30
-				},
-				february: {
-					"Tom": 40,
-					"Jake": 50,
-					"Michael": 60
-				},
-				march: {
-					"Tom": 70,
-					"Jake": 80,
-					"Michael": 90
-				}
-			},
-			{
-				size: '400x120',
-				colour: '99cc00,cc9900,0099cc',
-				dataScaling: {
-					top: 300,
-					bottom: 0
-				}
-			}
-		);
-		jsEasyCharts.bar(
-			'bar7',
-			{
-				january: {
-					"Tom": 10,
-					"Jake": 20,
-					"Michael": 30
-				},
-				february: {
-					"Tom": 40,
-					"Jake": 50,
-					"Michael": 60
-				},
-				march: {
-					"Tom": 70,
-					"Jake": 80,
-					"Michael": 90
-				}
-			},
-			{
-				type: 'vertical',
-				grouped: true,
-				size: '350x300',
-				colour: '99cc00,cc9900,0099cc',
-				legend: 'Tom,Jake,Michael'
-			}
-		);
-
-
-
-		// PIE CHARTS
-		// **********
-
-		// Basic pie chart
-		jsEasyCharts.pie(
-			'pie1',
-			[10,10,10]
-		);
-
-		// Setting data with JSON
-		jsEasyCharts.pie(
-			'pie2',
-			{
-				Apricots: 10,
-				Walnuts: 20,
-				Hazelnut: 30,
-				Almond: 40
-			},
-			{
-				size: '500x250'
-			}
-		);
-
-		// Setting data with a HTML table, changing the type of bar chart, and changing the colour
-		jsEasyCharts.pie(
-			'pie3',
-			'data3',
-			{
-				type: '3d',
-				size: '650x300',
-				colour: '0000ff,ff0000,ffff00'
-			}
-		);
-
-		// Overriding labels on the chart
-		jsEasyCharts.pie(
-			'pie4',
-			'data4',
-			{
-		//					type: 'p',
-				labels: ['IE7', 'IE6', 'IE8', 'FF', 'CH', 'SF', 'OTHERS'],
-				size: '600x300',
-				colour: '99cc00'
-			}
-		);
-
-		// Multiple data tracks with a HTML table in a pie chart
-		jsEasyCharts.pie(
-			'pie5',
-			'data5',
-			{
-				size: '600x300',
-				colour: '0099cc',
-				showLabels: false,
-				legend: 'UK,USA'
-			}
-		);
+		arrCodes = document.getElementsByTagName('code');
+		for (var x = 0, len = arrCodes.length; x < len; x++) {
+			eval(arrCodes[x].innerHTML);
+		}
 
 	}
 </script>
+
+<style type="text/css">
+#toc {border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; font-size: 0.7em;}
+#toc th {text-align: left; vertical-align: top;}
+#toc td {text-align: center;}
+#toc td, #toc th {border-left: 1px solid #ddd; border-top: 1px solid #ddd; padding: 0.25em;}
+.demo { border-bottom: 1px solid; margin: 1em; padding: 1em; overflow: hidden; zoom: 1;}
+pre {float: left;}
+.demo div {float: right;}
+table {clear: both;}
+</style>
 
 <!--[if IE]><![endif]><![endif]-->
 
 </head>
 <body>
 
+<h1>jsEasyCharts Manual Tests</h1>
+
+<table id="toc" cellspacing="0">
+	<thead>
+		<tr>
+			<th>
+			<th colspan="2">array data</th>
+			<th colspan="3">JSON data</th>
+			<th colspan="6">tabulated data</th>
+			<th colspan="14">options</th>
+		<tr>
+			<th></th>
+			<th>single</th>
+			<th>multi</th>
+			<th>single</th>
+			<th>multi</th>
+			<th>single data with labels</th>
+			<th>single</th>
+			<th>multi</th>
+			<th>data with labels</th>
+			<th>multi data with labels</th>
+			<th>single data with labels and axisLabels</th>
+			<th>multi data with labels and axisLabels</th>
+			<th>large dimension</th>
+			<th>colour</th>
+			<th>multi coloured</th>
+			<th>labels</th>
+			<th>axisLabels</th>
+			<th>labels and axisLabels</th>
+			<th>labels and axisLabels disabled</th>
+			<th>data scaling</th>
+			<th>legend</th>
+			<th>Alt text</th>
+			<th>barWidth and barSpacing</th>
+			<th>grouped</th>
+			<th>3D</th>
+			<th>grid lines</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th>line</th>
+			<td><a href="#line1">&#10003;</a></td>
+			<td><a href="#line5">&#10003;</a></td>
+			<td><a href="#line2">&#10003;</a></td>
+			<td><a href="#line8">&#10003;</a></td>
+			<td><a href="#line2">&#10003;</a></td>
+			<td><a href="#line3">&#10003;</a></td>
+			<td><a href="#line9">&#10003;</a></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><a href="#line4">&#10003;</a></td>
+			<td><a href="#line2">&#10003;</a></td>
+			<td><a href="#line6">&#10003;</a></td>
+			<td><a href="#line10">&#10003;</a></td>
+			<td><a href="#line7">&#10003;</a></td>
+			<td><a href="#line11">&#10003;</a></td>
+			<td><a href="#line12">&#10003;</a></td>
+			<td><a href="#line4">&#10003;</a></td>
+			<td><a href="#line6">&#10003;</a></td>
+			<td><a href="#line2">&#10003;</a></td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td></td>
+		</tr>
+		<tr>
+			<th>bar horizontal</th>
+			<td><a href="#bar1">&#10003;</a></td>
+			<td><a href="#bar8">&#10003;</a></td>
+			<td><a href="#bar2">&#10003;</a></td>
+			<td><a href="#bar6">&#10003;</a></td>
+			<td><a href="#bar2">&#10003;</a></td>
+			<td><a href="#bar3">&#10003;</a></td>
+			<td><a href="#bar9">&#10003;</a></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><a href="#bar9">&#10003;</a></td>
+			<td><a href="#bar2">&#10003;</a></td>
+			<td><a href="#bar10">&#10003;</a></td>
+			<td><a href="#bar8">&#10003;</a></td>
+			<td><a href="#bar9">&#10003;</a></td>
+			<td><a href="#bar3">&#10003;</a></td>
+			<td><a href="#bar11">&#10003;</a></td>
+			<td><a href="#bar9">&#10003;</a></td>
+			<td><a href="#bar10">&#10003;</a></td>
+			<td><a href="#bar2">&#10003;</a></td>
+			<td><a href="#bar11">&#10003;</a></td>
+			<td><a href="#bar10">&#10003;</a></td>
+			<td>X</td>
+			<td></td>
+		</tr>
+		<tr>
+			<th>bar vertical</th>
+			<td><a href="#bar12">&#10003;</a></td>
+			<td><a href="#bar13">&#10003;</a></td>
+			<td><a href="#bar4">&#10003;</a></td>
+			<td><a href="#bar14">&#10003;</a></td>
+			<td><a href="#bar4">&#10003;</a></td>
+			<td><a href="#bar5">&#10003;</a></td>
+			<td><a href="#bar15">&#10003;</a></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><a href="#bar7">&#10003;</a></td>
+			<td><a href="#bar4">&#10003;</a></td>
+			<td><a href="#bar15">&#10003;</a></td>
+			<td><a href="#bar13">&#10003;</a></td>
+			<td><a href="#bar16">&#10003;</a></td>
+			<td><a href="#bar17">&#10003;</a></td>
+			<td><a href="#bar18">&#10003;</a></td>
+			<td><a href="#bar5">&#10003;</a></td>
+			<td><a href="#bar7">&#10003;</a></td>
+			<td><a href="#bar12">&#10003;</a></td>
+			<td><a href="#bar5">&#10003;</a></td>
+			<td><a href="#bar7">&#10003;</a></td>
+			<td>X</td>
+			<td></td>
+		</tr>
+		<tr>
+			<th>pie</th>
+			<td><a href="#pie1">&#10003;</a></td>
+			<td><a href="#pie6">&#10003;</a></td>
+			<td><a href="#pie2">&#10003;</a></td>
+			<td><a href="#pie7">&#10003;</a></td>
+			<td><a href="#pie2">&#10003;</a></td>
+			<td><a href="#pie4">&#10003;</a></td>
+			<td><a href="#pie5">&#10003;</a></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><a href="#pie3">&#10003;</a></td>
+			<td><a href="#pie4">&#10003;</a></td>
+			<td><a href="#pie3">&#10003;</a></td>
+			<td><a href="#pie4">&#10003;</a></td>
+			<td>X</td>
+			<td>X</td>
+			<td><a href="#pie5">&#10003;</a></td>
+			<td>X</td>
+			<td><a href="#pie5">&#10003;</a></td>
+			<td><a href="#pie6">&#10003;</a></td>
+			<td>X</td>
+			<td>X</td>
+			<td><a href="#pie3">&#10003;</a></td>
+			<td>X</td>
+		</tr>
+		<tr>
+			<th>Side by side</th>
+			<td>X</td>
+			<td><a href="#sideBySide1">&#10003;</a></td>
+			<td>X</td>
+			<td><a href="#sideBySide2">&#10003;</a></td>
+			<td></td>
+			<td>X</td>
+			<td><a href="#sideBySide3">&#10003;</a></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><a href="#sideBySide3">&#10003;</a></td>
+			<td><a href="#sideBySide2">&#10003;</a></td>
+			<td></td>
+			<td><a href="#sideBySide4">&#10003;</a></td>
+			<td><a href="#sideBySide5">&#10003;</a></td>
+			<td><a href="#sideBySide6">&#10003;</a></td>
+			<td><a href="#sideBySide7">&#10003;</a></td>
+			<td><a href="#sideBySide6">&#10003;</a></td>
+			<td></td>
+			<td><a href="#sideBySide7">&#10003;</a></td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td><a href="#sideBySide7">&#10003;</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<h2>Line charts</h2>
+
+<div class="demo">
+<pre><code>// Basic line chart
+jsEasyCharts.line(
+	'line1',
+	[80,15,45,11,70,55]
+);</code></pre>
 <div id="line1"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Setting data with JSON, sizing and colouring
+jsEasyCharts.line(
+	document.getElementById('line2'),
+	{
+		January: 70,
+		Febuary: 54,
+		March: 51,
+		April: 60,
+		May: 33,
+		June: 30
+	},
+	{
+		colour: '99cc00',
+		size: '300x150',
+		altText: 'alt text test'
+	}
+);</code></pre>
 <div id="line2"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Defining labels and setting data with a HTML table
+jsEasyCharts.line(
+	'line3',
+	'dataLine3',
+	{
+		size: '600x120',
+		axisLabels: ['0%', '25%', '50%', '75%', '100%']
+	}
+);</code></pre>
 <div id="line3"></div>
 <table id="dataLine3">
 	<tr>
@@ -355,13 +305,312 @@
 		<td>50</td>
 	</tr>
 </table>
-<div id="line4"></div>
-<div id="line5"></div>
-<div id="line6"></div>
-<div id="line7"></div>
+</div>
 
+
+<div class="demo">
+<pre><code>// Data scaling a line chart
+jsEasyCharts.line(
+	'line4',
+	{
+		week01: 20,
+		week02: 17,
+		week03: 13,
+		week04: 8,
+		week05: 4,
+		week06: -1,
+		week07: 1,
+		week08: 0,
+		week09: -1,
+		week10: -3,
+		week11: -6,
+		week12: -5,
+		week13: -2,
+		week14: 2
+	},
+	{
+		size: '600x300',
+		dataScaling: {
+			top: 25, 
+			bottom: -15
+		},
+		axisLabels: ['-10', '-8', '-6', '-4', '-2', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20']
+	}
+);</code></pre>
+<div id="line4"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Multiple data tracks with an array on a line chart
+jsEasyCharts.line(
+	'line5',
+	[[86,75,82,69,50,34], [29,22,25,40,49,55]],
+	{
+		size: '200x150',
+		colour: '99cc00,cc9900'
+	}
+);</code></pre>
+<div id="line5"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.line(
+	'line6',
+	[[86,75,82,69,50,34], [29,22,25,40,49,55]],
+	{
+		size: '270x150',
+		colour: '99cc00,cc9900',
+		legend: 'POUND,EURO'
+	}
+);</code></pre>
+<div id="line6"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Data with axis labels but no labels
+jsEasyCharts.line(
+	'line7',
+	[36,42,53,40,39,30,36,45,50],
+	{
+		size: '200x120',
+		axisLabels: ['0%', '25%', '50%', '75%', '100%']
+	}
+);</code></pre>
+<div id="line7"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Setting data with large JSON data
+jsEasyCharts.line(
+	document.getElementById('line8'),
+	{
+		east: {
+			January: 70,
+			Febuary: 54,
+			March: 51,
+			April: 60,
+			May: 33,
+			June: 30
+		},
+		west: {
+			January: 25,
+			Febuary: 32,
+			March: 31,
+			April: 39,
+			May: 35,
+			June: 20
+		},
+		north: {
+			January: 52,
+			Febuary: 64,
+			March: 70,
+			April: 75,
+			May: 80,
+			June: 72
+		}
+	},
+	{
+		showLabels: false
+	}
+);</code></pre>
+<div id="line8"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Defining labels and setting data with a HTML table
+jsEasyCharts.line(
+	'line9',
+	'dataLine9',
+	{
+		size: '600x120',
+		axisLabels: ['0%', '25%', '50%', '75%', '100%']
+	}
+);</code></pre>
+<div id="line9"></div>
+<table id="dataLine9">
+	<tr>
+		<td>2009-02-01</td>
+		<td>36</td>
+		<td>85</td>
+	</tr>
+	<tr>
+		<td>2009-02-02</td>
+		<td>42</td>
+		<td>76</td>
+	</tr>
+	<tr>
+		<td>2009-02-03</td>
+		<td>53</td>
+		<td>60</td>
+	</tr>
+	<tr>
+		<td>2009-02-04</td>
+		<td>40</td>
+		<td>52</td>
+	</tr>
+	<tr>
+		<td>2009-02-05</td>
+		<td>39</td>
+		<td>68</td>
+	</tr>
+	<tr>
+		<td>2009-02-06</td>
+		<td>30</td>
+		<td>76</td>
+	</tr>
+	<tr>
+		<td>2009-02-07</td>
+		<td>36</td>
+		<td>81</td>
+	</tr>
+	<tr>
+		<td>2009-02-08</td>
+		<td>45</td>
+		<td>71</td>
+	</tr>
+	<tr>
+		<td>2009-02-09</td>
+		<td>50</td>
+		<td>55</td>
+	</tr>
+</table>
+</div>
+
+
+<div class="demo">
+<pre><code>// Labels set in options
+jsEasyCharts.line(
+	document.getElementById('line10'),
+	{
+		January: 70,
+		Febuary: 54,
+		March: 51,
+		April: 60,
+		May: 33,
+		June: 30
+	},
+	{
+		colour: '99cc00',
+		size: '300x150',
+		labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN']
+	}
+);</code></pre>
+<div id="line10"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Labels and axisLabels set in options
+jsEasyCharts.line(
+	document.getElementById('line11'),
+	{
+		January: 70,
+		Febuary: 54,
+		March: 51,
+		April: 60,
+		May: 33,
+		June: 30
+	},
+	{
+		colour: '99cc00',
+		size: '300x150',
+		labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN'],
+		axisLabels: ['bad', 'average', 'good']
+	}
+);</code></pre>
+<div id="line11"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Labels and axisLabels disabled
+jsEasyCharts.line(
+	document.getElementById('line12'),
+	{
+		January: 70,
+		Febuary: 54,
+		March: 51,
+		April: 60,
+		May: 33,
+		June: 30
+	},
+	{
+		colour: '99cc00',
+		size: '300x150',
+		labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN'],
+		axisLabels: ['bad', 'average', 'good'],
+		showLabels: false,
+		showAxisLabels: false
+	}
+);</code></pre>
+<div id="line12"></div>
+</div>
+
+
+<h2>Horizontal bar charts</h2>
+
+
+<div class="demo">
+<pre><code>// Basic bar chart
+jsEasyCharts.bar(
+	'bar1',
+	[60,40,10]
+);</code></pre>
 <div id="bar1"></div>
+</div>
+
+<div class="demo">
+<pre><code>// Multi-arrayed bar chart
+jsEasyCharts.bar(
+	'bar8',
+	[[50,20,10],[10,30,50]],
+	{
+		colour: '99cc00,cc9900',
+		labels: ['Aug', 'Sep', 'Oct'],
+		altText: 'alt text test'
+	}
+);</code></pre>
+<div id="bar8"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Setting data with JSON, sizing and colouring
+jsEasyCharts.bar(
+	'bar2',
+	{
+		Apricots: 10,
+		Walnuts: 20,
+		Hazelnut: 30,
+		Almond: 40
+	},
+	{
+		colour: '99cc00',
+		size: '300x150'
+	}
+);</code></pre>
 <div id="bar2"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Defining labels and setting data with a HTML table
+jsEasyCharts.bar(
+	'bar3',
+	'dataBar3',
+	{
+		type: 'horizontal',
+		size: '200x120',
+		showLabels: false,
+		labels: ['Con', 'Lab', 'Lib Dem'],
+		axisLabels: ['0%', '25%', '50%', '75%', '100%']
+	}
+);</code></pre>
 <div id="bar3"></div>
 <table id="dataBar3">
 	<tr>
@@ -377,13 +626,465 @@
 		<td>20</td>
 	</tr>
 </table>
-<div id="bar4"></div>
-<div id="bar5"></div>
-<div id="bar6"></div>
-<div id="bar7"></div>
+</div>
 
+
+<div class="demo">
+<pre><code>// Defining labels and setting data with a HTML table
+jsEasyCharts.bar(
+	'bar9',
+	'dataBar9',
+	{
+		size: '600x450',
+		axisLabels: ['0%', '25%', '50%', '75%', '100%'],
+		colour: '99cc00,cc9900',
+		dataScaling: {
+			top: 200,
+			bottom: 0
+		}
+	}
+);</code></pre>
+<div id="bar9"></div>
+<table id="dataBar9">
+	<tr>
+		<td>2009-02-01</td>
+		<td>36</td>
+		<td>85</td>
+	</tr>
+	<tr>
+		<td>2009-02-02</td>
+		<td>42</td>
+		<td>76</td>
+	</tr>
+	<tr>
+		<td>2009-02-03</td>
+		<td>53</td>
+		<td>60</td>
+	</tr>
+	<tr>
+		<td>2009-02-04</td>
+		<td>40</td>
+		<td>52</td>
+	</tr>
+	<tr>
+		<td>2009-02-05</td>
+		<td>39</td>
+		<td>68</td>
+	</tr>
+	<tr>
+		<td>2009-02-06</td>
+		<td>30</td>
+		<td>76</td>
+	</tr>
+	<tr>
+		<td>2009-02-07</td>
+		<td>36</td>
+		<td>81</td>
+	</tr>
+	<tr>
+		<td>2009-02-08</td>
+		<td>45</td>
+		<td>71</td>
+	</tr>
+	<tr>
+		<td>2009-02-09</td>
+		<td>50</td>
+		<td>55</td>
+	</tr>
+</table>
+</div>
+
+
+<div class="demo">
+<pre><code>// Multiple data tracks with a JSON object in a bar chart
+jsEasyCharts.bar(
+	'bar6',
+	{
+		january: {
+			"Tom": 10,
+			"Jake": 20,
+			"Michael": 30
+		},
+		february: {
+			"Tom": 40,
+			"Jake": 50,
+			"Michael": 60
+		},
+		march: {
+			"Tom": 70,
+			"Jake": 80,
+			"Michael": 90
+		}
+	},
+	{
+		size: '400x120',
+		colour: '99cc00,cc9900,0099cc',
+		dataScaling: {
+			top: 300,
+			bottom: 0
+		}
+	}
+);</code></pre>
+<div id="bar6"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.bar(
+	'bar10',
+	{
+		january: {
+			"Tom": 10,
+			"Jake": 20,
+			"Michael": 30
+		},
+		february: {
+			"Tom": 40,
+			"Jake": 50,
+			"Michael": 60
+		},
+		march: {
+			"Tom": 70,
+			"Jake": 80,
+			"Michael": 90
+		}
+	},
+	{
+		grouped: true,
+		size: '350x300',
+		colour: '99cc00,cc9900,0099cc',
+		legend: 'Tom,Jake,Michael'
+	}
+);</code></pre>
+<div id="bar10"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Defining labels and setting data with a HTML table
+jsEasyCharts.bar(
+	'bar11',
+	'dataBar11',
+	{
+		type: 'horizontal',
+		size: '400x320',
+		labels: ['Con', 'Lab', 'Lib Dem'],
+		axisLabels: ['0%', '25%', '50%', '75%', '100%'],
+		showLabels: false,
+		showAxisLabels: false,
+		barWidth: 50,
+		barSpacing: 40
+	}
+);</code></pre>
+<div id="bar11"></div>
+<table id="dataBar11">
+	<tr>
+		<td>Conservative</td>
+		<td>33</td>
+	</tr>
+	<tr>
+		<td>Labour</td>
+		<td>16</td>
+	</tr>
+	<tr>
+		<td>Liberal Democrates</td>
+		<td>20</td>
+	</tr>
+</table>
+</div>
+
+
+<h2>Vertical bar chart</h2>
+
+
+<div class="demo">
+<pre><code>// Basic bar chart
+jsEasyCharts.bar(
+	'bar12',
+	[60,40,10],
+	{
+		type: 'vertical',
+		altText: 'alt text test'
+	}
+);</code></pre>
+<div id="bar12"></div>
+</div>
+
+<div class="demo">
+<pre><code>// Multi-arrayed bar chart
+jsEasyCharts.bar(
+	'bar13',
+	[[50,20,10],[10,30,50]],
+	{
+		colour: '99cc00,cc9900',
+		labels: ['Aug', 'Sep', 'Oct'],
+		altText: 'alt text test',
+		type: 'vertical'
+	}
+);</code></pre>
+<div id="bar13"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Vertical bar chart
+jsEasyCharts.bar(
+	'bar4',
+	{
+		Hazelnut: 30,
+		Apricots: 10,
+		Almond: 40,
+		Walnuts: 20
+	},
+	{
+		type: 'vertical',
+		size: '250x150',
+		barWidth: 20,
+		barSpacing: 30,
+		colour: '99cc00'
+	}
+);</code></pre>
+<div id="bar4"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Multiple data tracks with a JSON object in a bar chart
+jsEasyCharts.bar(
+	'bar14',
+	{
+		january: {
+			"Tom": 10,
+			"Jake": 20,
+			"Michael": 30
+		},
+		february: {
+			"Tom": 40,
+			"Jake": 50,
+			"Michael": 60
+		},
+		march: {
+			"Tom": 70,
+			"Jake": 80,
+			"Michael": 90
+		}
+	},
+	{
+		size: '400x400',
+		colour: '99cc00,cc9900,0099cc',
+		dataScaling: {
+			top: 300,
+			bottom: 0
+		},
+		type: 'vertical',
+		barSpacing: 50,
+		barWidth: 30
+	}
+);</code></pre>
+<div id="bar14"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Data scaling a bar chart
+jsEasyCharts.bar(
+	'bar5',
+	'databar5',
+	{
+		type: 'vertical',
+		size: '250x300',
+		barWidth: 50,
+		barSpacing: 5,
+		dataScaling: {
+			top: 140, 
+			bottom: -80
+		},
+		axisLabels: ['-80', '-60', '-40', '-20', '0', '20', '40', '60', '80', '100', '120', '140']
+	}
+);</code></pre>
+<div id="bar5"></div>
+<table id="databar5">
+	<tr>
+		<td>November</td>
+		<td>80</td>
+	</tr>
+	<tr>
+		<td>December</td>
+		<td>-70</td>
+	</tr>
+	<tr>
+		<td>January</td>
+		<td>120</td>
+	</tr>
+	<tr>
+		<td>Febuary</td>
+		<td>-40</td>
+	</tr>
+</table>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.bar(
+	'bar15',
+	'databar15',
+	{
+		type: 'vertical',
+		grouped: true,
+		size: '350x300',
+		colour: '99cc00,cc9900,0099cc',
+		legend: 'Tom,Jake,Michael'
+	}
+);</code></pre>
+<div id="bar15"></div>
+<table id="databar15">
+	<tr>
+		<td>january</td>
+		<td>10</td>
+		<td>20</td>
+		<td>30</td>
+	</tr>
+	<tr>
+		<td>february</td>
+		<td>40</td>
+		<td>50</td>
+		<td>60</td>
+	</tr>
+	<tr>
+		<td>march</td>
+		<td>70</td>
+		<td>80</td>
+		<td>90</td>
+	</tr>
+</table>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.bar(
+	'bar7',
+	{
+		january: {
+			"Tom": 10,
+			"Jake": 20,
+			"Michael": 30
+		},
+		february: {
+			"Tom": 40,
+			"Jake": 50,
+			"Michael": 60
+		},
+		march: {
+			"Tom": 70,
+			"Jake": 80,
+			"Michael": 90
+		}
+	},
+	{
+		type: 'vertical',
+		grouped: true,
+		size: '350x300',
+		colour: '99cc00,cc9900,0099cc',
+		legend: 'Tom,Jake,Michael'
+	}
+);</code></pre>
+<div id="bar7"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Basic bar chart
+jsEasyCharts.bar(
+	'bar16',
+	[60,40,10],
+	{
+		size: '200x300',
+		type: 'vertical',
+		axisLabels: ['high', 'medium', 'low']
+	}
+);</code></pre>
+<div id="bar16"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Basic bar chart
+jsEasyCharts.bar(
+	'bar17',
+	[60,40,10],
+	{
+		size: '200x300',
+		type: 'vertical',
+		labels: ['Tom', 'Jake', 'Michael'],
+		axisLabels: ['high', 'medium', 'low'],
+		barWidth: 30
+	}
+);</code></pre>
+<div id="bar17"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Basic bar chart
+jsEasyCharts.bar(
+	'bar18',
+	[60,40,10],
+	{
+		size: '200x300',
+		type: 'vertical',
+		labels: ['Tom', 'Jake', 'Michael'],
+		axisLabels: ['high', 'medium', 'low'],
+		showLabels: false,
+		showAxisLabels: false,
+		barWidth: 30
+	}
+);</code></pre>
+<div id="bar18"></div>
+</div>
+
+
+<h2>Pie charts</h2>
+
+
+<div class="demo">
+<pre><code>// Basic pie chart
+jsEasyCharts.pie(
+	'pie1',
+	[10,10,10]
+);</code></pre>
 <div id="pie1"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Setting data with JSON
+jsEasyCharts.pie(
+	'pie2',
+	{
+		Apricots: 10,
+		Walnuts: 20,
+		Hazelnut: 30,
+		Almond: 40
+	},
+	{
+		size: '500x250'
+	}
+);</code></pre>
 <div id="pie2"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Setting data with a HTML table, changing the type of bar chart, and changing the colour
+jsEasyCharts.pie(
+	'pie3',
+	'data3',
+	{
+		type: '3d',
+		size: '650x300',
+		colour: '0000ff,ff0000,ffff00'
+	}
+);</code></pre>
 <div id="pie3"></div>
 <table id="data3">
 	<tr>
@@ -399,6 +1100,20 @@
 		<td>20</td>
 	</tr>
 </table>
+</div>
+
+
+<div class="demo">
+<pre><code>// Overriding labels on the chart
+jsEasyCharts.pie(
+	'pie4',
+	'data4',
+	{
+		labels: ['IE7', 'IE6', 'IE8', 'FF', 'CH', 'SF', 'OTHERS'],
+		size: '600x300',
+		colour: '99cc00'
+	}
+);</code></pre>
 <div id="pie4"></div>
 <table id="data4">
 	<tr>
@@ -421,6 +1136,21 @@
 		<td>2.2</td>
 	</tr>
 </table>
+</div>
+
+
+<div class="demo">
+<pre><code>// Multiple data tracks with a HTML table in a pie chart
+jsEasyCharts.pie(
+	'pie5',
+	'data5',
+	{
+		size: '600x300',
+		colour: '0099cc',
+		showLabels: false,
+		legend: 'UK,USA'
+	}
+);</code></pre>
 <div id="pie5"></div>
 <table id="data5">
 	<tr>
@@ -446,7 +1176,250 @@
 		<td>25</td>
 	</tr>
 </table>
+</div>
+
+
+<div class="demo">
+<pre><code>
+jsEasyCharts.pie(
+	'pie6',
+	[[25, 15, 20, 30, 10], [15, 20, 30, 10, 25], [10, 15, 30, 25, 20]],
+	{
+		size: '600x300',
+		colour: 'cc9900',
+		showLabels: false,
+		altText: 'alt text test'
+	}
+);</code></pre>
 <div id="pie6"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>// Setting data with JSON
+jsEasyCharts.pie(
+	'pie7',
+	{
+		west: {
+			Apricots: 40,
+			Walnuts: 30,
+			Hazelnut: 20,
+			Almond: 10
+		},
+		east: {
+			Apricots: 10,
+			Walnuts: 20,
+			Hazelnut: 30,
+			Almond: 40
+		}
+	},
+	{
+		size: '500x250',
+		showLabels: false
+	}
+);</code></pre>
+<div id="pie7"></div>
+</div>
+
+
+<h2>Side by side charts</h2>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.sideBySide(
+	'sideBySide1',
+	[[40, 35, 30, 35, 40, 45, 50], [30, 25, 15, 20, 25, 30, 35]]
+);</code></pre>
+<div id="sideBySide1"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.sideBySide(
+	'sideBySide2',
+	{
+		male: {
+			"65 %2B": 40, 
+			"60-64": 22, 
+			"55-59": 23, 
+			"50-54": 24, 
+			"45-49": 25, 
+			"40-44": 29, 
+			"35-39": 28, 
+			"30-34": 23, 
+			"25-29": 20, 
+			"20-24": 16, 
+			"15-19": 16, 
+			"10-14": 15, 
+			"05-09": 15
+		}, 
+		female: {
+			"65 %2B": 40, 
+			"60-64": 22, 
+			"55-59": 23, 
+			"50-54": 24, 
+			"45-49": 25, 
+			"40-44": 29, 
+			"35-39": 28, 
+			"30-34": 23, 
+			"25-29": 20, 
+			"20-24": 16, 
+			"15-19": 16, 
+			"10-14": 15, 
+			"05-09": 15
+		}
+	},
+	{
+		size: '500x390',
+		colour: '99cc00',
+		gridLines: true
+	}
+);</code></pre>
+<div id="sideBySide2"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.sideBySide(
+	'sideBySide3',
+	'dataSideBySide3',
+	{
+		size: '500x390',
+		colour: '99cc00',
+		gridLines: true
+	}
+);</code></pre>
+<div id="sideBySide3"></div>
+<table id="dataSideBySide3">
+	<tr>
+		<td>65 %2B</td> 
+		<td>60-64</td>
+		<td>55-59</td> 
+		<td>50-54</td>
+		<td>45-49</td>
+		<td>40-44</td>
+		<td>35-39</td>
+		<td>30-34</td>
+		<td>25-29</td>
+		<td>20-24</td>
+		<td>15-19</td> 
+		<td>10-14</td>
+		<td>05-09</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>22</td>
+		<td>23</td>
+		<td>24</td>
+		<td>25</td>
+		<td>29</td>
+		<td>28</td>
+		<td>23</td>
+		<td>20</td>
+		<td>16</td>
+		<td>16</td>
+		<td>15</td>
+		<td>15</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>22</td>
+		<td>23</td>
+		<td>24</td>
+		<td>25</td>
+		<td>29</td>
+		<td>28</td>
+		<td>23</td>
+		<td>20</td>
+		<td>16</td>
+		<td>16</td>
+		<td>15</td>
+		<td>15</td>
+	</tr>
+</table>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.sideBySide(
+	'sideBySide4',
+	[[40, 22, 23, 24, 25, 29, 28, 23, 20, 16, 16, 15, 15, 15], [40, 22, 23, 24, 25, 29, 28, 23, 20, 16, 16, 15, 15, 15]],
+	{
+		dataScaling: {
+			top: 50, 
+			bottom: 0
+		},
+		gridLines: true,
+		size: '500x390',
+		colour: '99cc00',
+		labels: ["65 %2B", "60-64", "55-59", "50-54", "45-49", "40-44", "35-39", "30-34", "25-29", "20-24", "15-19", "10-14", "05-09", "00-04"]
+	}
+);</code></pre>
+<div id="sideBySide4"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.sideBySide(
+	'sideBySide5',
+	[[40, 22, 23, 24, 25, 29, 28, 23, 20, 16, 16, 15, 15, 15], [40, 22, 23, 24, 25, 29, 28, 23, 20, 16, 16, 15, 15, 15]],
+	{
+		dataScaling: {
+			top: 50, 
+			bottom: 0
+		},
+		gridLines: true,
+		size: '500x390',
+		colour: '99cc00',
+		axisLabels: [0,10,20,30,40,50,60,70,80,90,100]
+	}
+);</code></pre>
+<div id="sideBySide5"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.sideBySide(
+	'sideBySide6',
+	[[40, 22, 23, 24, 25, 29, 28, 23, 20, 16, 16, 15, 15, 15], [40, 22, 23, 24, 25, 29, 28, 23, 20, 16, 16, 15, 15, 15]],
+	{
+		dataScaling: {
+			top: 50, 
+			bottom: 0
+		},
+		gridLines: true,
+		size: '500x390',
+		colour: '99cc00',
+		labels: ["65 %2B", "60-64", "55-59", "50-54", "45-49", "40-44", "35-39", "30-34", "25-29", "20-24", "15-19", "10-14", "05-09", "00-04"],
+		axisLabels: [0,10,20,30,40,50,60,70,80,90,100]
+	}
+);</code></pre>
+<div id="sideBySide6"></div>
+</div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.sideBySide(
+	'sideBySide7',
+	[[40, 22, 23, 24, 25, 29, 28, 23, 20, 16, 16, 15, 15, 15], [40, 22, 23, 24, 25, 29, 28, 23, 20, 16, 16, 15, 15, 15]],
+	{
+		dataScaling: {
+			top: 50, 
+			bottom: 0
+		},
+		gridLines: true,
+		size: '500x390',
+		colour: '99cc00',
+		labels: ["65 %2B", "60-64", "55-59", "50-54", "45-49", "40-44", "35-39", "30-34", "25-29", "20-24", "15-19", "10-14", "05-09", "00-04"],
+		axisLabels: [0,10,20,30,40,50,60,70,80,90,100],
+		showLabels: false,
+		showAxisLabels: false,
+		altText: 'alt text test'
+	}
+);</code></pre>
+<div id="sideBySide7"></div>
+</div>
+
 
 </body>
 </html>
