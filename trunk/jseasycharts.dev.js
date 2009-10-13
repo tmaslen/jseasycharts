@@ -8,7 +8,7 @@ var jsEasyCharts;
 
 		opts = (opts || {});
 		chartSubTypes = (chartSubTypes || '');
-		var url = 'http://chart.apis.google.com/chart?',
+		var url = '',
 			labels = '',
 			axisLabels = '',
 			labelOrientation = '';
@@ -19,10 +19,8 @@ var jsEasyCharts;
 			// Data
 				var parseDataObject = parseData(values);
 				data = parseDataObject.data;
-				labels = parseDataObject.labels;
-
-				// NEW LABEL CODE
 				labels = parseDataObject.labels.substr(4);
+
 
 		// optional
 			// Size
@@ -58,6 +56,13 @@ var jsEasyCharts;
 				if (typeof opts.legend != "undefined")
 				{
 					additionalPairValues += "&amp;chdl=" + opts.legend.replace(/,/g, "|");
+				}
+			// url + protocol
+				if (opts.https === true) {
+					url = 'https://www.google.com/chart?';
+				}
+				else {
+					url = 'http://chart.apis.google.com/chart?';
 				}
 
 
@@ -318,16 +323,6 @@ var jsEasyCharts;
 
 			opts = (opts || {});
 
-			// WHAT HAPPENS WHEN NO LABELS?
-			// *** RIGHT CHART DOESN'T QUITE LINE UP! ***
-
-
-			// WHAT HAPPENS WITH DATA SCALING?
-			// WE CAN'T ALLOW NEGATIVE NUMBERS IN, BECAUSE THE FIRST TRACK WILL BE SET TO A NEGATIVE NUMBER AND WE CAN'T HAVE NEGATIVE NEGATIVE NUMBERS
-
-
-			// IS THERE A PROBLEM WITH HORIZONTAL BAR CHARTS WITH MULTI-TRACKED DATA COMING FROM A TABLE?
-
 
 			// Sort the data.  The data for the left side will actually need to be negative values.
 
@@ -335,7 +330,7 @@ var jsEasyCharts;
 				// but we actually need it as an array...
 				var parseDataResults = parseData(values);
 				var data = parseDataResults.data.substr(6).split("|");
-				
+
 				// DataSet needs to have two tracks
 				if (data.length != 2)
 				{
@@ -374,8 +369,11 @@ var jsEasyCharts;
 				opts.dataScaling.bottom = negativeNumber(originalDataScaling.top);
 
 
-			// Labels
-				opts.labels = parseDataResults.labels;
+			// Labels - if no labels are passed through then add labels from parsed data source (JSON or table)
+				if (!isArray(opts.labels)) {
+					opts.labels = parseDataResults.labels.substr(4).split('|');
+				}
+
 
 			// Chart size, we need to set the width to be half of what is set by the user.
 				
@@ -384,8 +382,13 @@ var jsEasyCharts;
 
 				// Cut the width value in half
 				var originalSize = opts.size
-				opts.size = (originalSize.substr(0, originalSize.indexOf('x')) / 2) + originalSize.substr(originalSize.indexOf('x'))
+				opts.size = (originalSize.substr(0, originalSize.indexOf('x')) / 2) + originalSize.substr(originalSize.indexOf('x'));
 
+
+			// Make sure a legend has not been passed in
+				if (typeof opts.legend != "undefined") {
+					delete opts.legend;
+				}
 
 			// Give the two images a parent element that will stop them from line breaking
 				var parentDiv = document.createElement('DIV');
@@ -522,7 +525,6 @@ var jsEasyCharts;
 	// JSON or an array and processes it into a googleCharts
 	// friendly string of chart values
 	function parseData(values) {
-		
 		var data = '',
 			labels = '';
 		if (typeof values == 'undefined') {
@@ -545,7 +547,6 @@ var jsEasyCharts;
 					// E.g. ['vertical', 3] = data tracks run down the table, and there are 3 columns of data.
 					// E.g. ['horizontal', 1] = data tracks run left to right across the table, and there is 1 row of data
 					var checkedTable = table_check(values);
-
 					if (checkedTable[0] == 'vertical') {
 						data = 'chd=t:' + mapVerticalTableToChartValues(values, checkedTable[1]);
 						labels = 'chl=' + mapVerticalTableToChartLabels(values);
