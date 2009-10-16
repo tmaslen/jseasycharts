@@ -36,18 +36,30 @@ var jsEasyCharts;
 					opts.type = convert_type_names_for_multi_tracks(opts.type);
 				}
 				var type = 'cht=' + opts.type;
+
 			// Label
-				if(isArray(opts.labels)) {
-					
-					// Fix an odd behaviour in Google Charts, labels appear in wrong order if bar chart is set to horizontal.
+
+				// dataSourced labels
 					if (opts.graphAxis == 'horizontal') {
-						opts.labels.reverse();
+						if (labels.indexOf('|') > -1) {
+							labels = labels.split('|').reverse().join('|');
+						}
+					}
+				
+				// option defined labels
+					if(isArray(opts.labels)) {
+						
+						// Fix an odd behaviour in Google Charts, labels appear in wrong order if bar chart is set to horizontal.
+						if (opts.graphAxis == 'horizontal') {
+							opts.labels.reverse();
+						}
+
+						// if a labels property is passed in through the options object, then overwrite any label data we have
+						// form label array into Google Charts friendly string and add it to a querystring pair
+						labels = opts.labels.toString().replace(/,/g, '|');
 					}
 
-					// if a labels property is passed in through the options object, then overwrite any label data we have
-					// form label array into Google Charts friendly string and add it to a querystring pair
-					labels = opts.labels.toString().replace(/,/g, '|');
-				}
+
 			// Colour
 				var colour = 'chco=' + (opts.colour || '');
 			// Alt text
@@ -596,13 +608,17 @@ var jsEasyCharts;
 		var r = [];
 		for (value in values) {
 			// If first value of JSON is an object, then user has passed in multiple tracked data...
-			if (typeof values[value] == "object") {return mapJsonWithMultipleTracksToChartValues(values);}
+			if (typeof values[value] == "object") {
+				// Return this the output of this function instead of building up and returning an array.
+				return mapJsonWithMultipleTracksToChartValues(values);
+			}
 			// Otherwise continue building return value
 			r.push(values[value]);
 		}
 		return r;
 	}
 
+	//
 	function mapJsonWithMultipleTracksToChartValues(values) {
 		var r = '';
 		for (track in values) {
