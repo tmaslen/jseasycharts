@@ -10,7 +10,7 @@
 
 <!--[if IE]><![if gte IE 6]><![endif]-->
 
-<script type="text/javascript" src="jseasycharts.dev.js"></script>
+<script type="text/javascript" src="jseasycharts.min.js"></script>
 
 <script type="text/javascript">
 	window.onload = function() {
@@ -777,6 +777,64 @@ jsEasyCharts.bar(
 );</code></pre>
 <div id="bar10"></div>
 </div>
+
+
+<div class="demo">
+<pre><code>jsEasyCharts.bar(
+	'bar21',
+	'databar21B',
+	{
+		grouped: true,
+		size: '350x300',
+		colour: '99cc00,cc9900,0099cc',
+		legend: 'Tom,Jake,Michael'
+	}
+);</code></pre>
+<div id="bar21"></div>
+<table id="databar21A">
+	<tr>
+		<td>january</td>
+		<td>10</td>
+		<td>20</td>
+		<td>30</td>
+	</tr>
+	<tr>
+		<td>february</td>
+		<td>40</td>
+		<td>50</td>
+		<td>60</td>
+	</tr>
+	<tr>
+		<td>march</td>
+		<td>70</td>
+		<td>80</td>
+		<td>90</td>
+	</tr>
+</table>
+<table id="databar21B">
+	<tr>
+		<td>january</td>
+		<td>february</td>
+		<td>march</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>20</td>
+		<td>30</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>50</td>
+		<td>60</td>
+	</tr>
+	<tr>
+		<td>70</td>
+		<td>80</td>
+		<td>90</td>
+	</tr>
+</table>
+</div>
+
 
 
 <div class="demo">
