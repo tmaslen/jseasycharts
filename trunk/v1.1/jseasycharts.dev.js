@@ -449,13 +449,15 @@ var jsEasyCharts;
 
 			// PROBABLY WON'T NEED THIS
 			// Bit of css to make the images align nicely
-			/*
 				arrImg = attachTo.getElementsByTagName('IMG');
 				for(var p = 0, arrLen = arrImg.length; p < arrLen; p++) {
-					arrImg[p].style.display = 'block';
+					arrImg[p].style.display = 'inline';
 					arrImg[p].style.float = 'left';
+					arrImg[p].style.border = 'none';
+					arrImg[p].style.padding = '0';
+					arrImg[p].style.margin = '0';
 				}
-			*/
+
 
 			// last thing is to remove the id from parentDiv (we can't have two elements on the page with the same id).
 				attachTo.id = '';
