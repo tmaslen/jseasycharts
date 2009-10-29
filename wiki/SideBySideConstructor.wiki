@@ -34,11 +34,11 @@ jsEasyCharts.sideBySide(attachTo, dataSource, opts);
 		<dd>Type: JSON OBJECT<br />
 		Default: none<br />
 		By default the values that you can enter range from 0 - 100. Google Charts will ignore any value you enter which is less than 0, and cap any values higher than 100 at 100. You can override this behaviour with the use of the dataScaling parameter in the options object.  Use the dataScaling option to specify a top and bottom value for your data to be scaled against (e.g. dataScaling: {top: 230, bottom: 120}.</dd>
-		<dt>https</dt>
 		<dt>gridLines</dt>
 		<dd>Type: boolean<br />
 		Default: false<br />
 		Setting this to true will give your sideBySide chart vertical greyed out gridlines in the background.</dd>
+		<dt>https</dt>
 		<dd>Type: boolean<br />
 		Default: false<br />
 		Set to true if you want an image that has a URL that starts with "https" and won't cause a security alert on a secure page.</dd>
