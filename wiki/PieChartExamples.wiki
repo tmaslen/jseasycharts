@@ -1,5 +1,5 @@
 #summary Pie Chart Examples
-#labels Featured,PieChart,Exammple
+#labels Featured,PieChart,Example
 
 == Basic pie chart ==
 
